@@ -1,5 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  before do
+    User.create(
+      username: 'Re Peter',
+      email: 'ch@gmail.com',
+      password: '55treeAnts',
+      reset_password_token: 'rabbit',
+      reset_password_sent_at: DateTime.now,
+      remember_created_at: DateTime.now
+    )
+  end
+
+  describe 'Validations' do
+    subject {
+      User.all[0].posts.create(
+        content: 'good rabbits'
+      )
+    }
+
+    it 'is valid with the correct attributes' do
+      expect(subject).to be_valid
+    end
+
+    it 'is invalid when there is no content' do
+      subject.content = nil
+      expect(subject).to_not be_valid
+    end
+
+    it 'is invalid when the content is more than 500 letters' do
+      subject.content = Array.new(550, 'words').join(' ')
+      expect(subject).to_not be_valid
+    end
+  end
 end
