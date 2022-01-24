@@ -273,6 +273,7 @@ DEPENDENCIES
   byebug
   capybara (>= 3.26)
   devise
+  guard
   guard-rspec
   jbuilder (~> 2.7)
   listen (~> 3.3)

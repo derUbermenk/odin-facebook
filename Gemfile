@@ -47,7 +47,8 @@ group :development do
   gem 'spring'
 
   # Automatically run tests with guard
-   gem 'guard-rspec', require: false
+  gem 'guard'
+  gem 'guard-rspec', require: false
 end
 
 group :test do
