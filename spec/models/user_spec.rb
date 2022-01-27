@@ -1,8 +1,21 @@
 require 'rails_helper'
 
-RSpec.describe User, type: :model do
+FactoryBot.define do
+  factory :user do
+    username { 'default' }
+    email { 'default@email.com' }
+    password { 'default' }
+  end
+end
 
+RSpec.describe User, type: :model do
+  
   describe 'Validations' do
+
+    before(:example) do
+      create :user
+    end
+
     subject {
       described_class.new(
         username: 'Ch Asuncion',
@@ -25,17 +38,11 @@ RSpec.describe User, type: :model do
       expect(subject).to_not be_valid
     end
 
-    it 'is invalid when there is a similar email' do
-      described_class.create(
-        username: 'Re Peter',
-        email: 'ch@gmail.com',
-        password: '55treeAnts',
-        reset_password_token: 'rabbit',
-        reset_password_sent_at: DateTime.now,
-        remember_created_at: DateTime.now
-      )
-
-      expect(subject).to_not be_valid
+    context 'when there is a similar email' do
+      it 'is invalid' do
+        subject.email = 'default@email.com' 
+        expect(subject).to_not be_valid
+      end
     end
 
     it 'is invalid when there is no password' do
@@ -52,7 +59,12 @@ RSpec.describe User, type: :model do
   describe 'Asssociations' do
     it { should have_many(:posts) }
     it { should have_many(:comments) }
-    # it { should have_many(:friends) }
-    # it { should have_many(:messages) }
+    # it { should have_many(:sent_messages) }
+    # it { should have_many(:received_messages) }
+
+    it { should have_many(:sent_friend_requests) }
+    it { should have_many(:received_friend_requests) }
+    it { should have_many(:initiated_friendships) }
+    it { should have_many(:accepted_friendships) }
   end
 end
