@@ -4,6 +4,7 @@ class PostsController < ApplicationController
 
   # GET /posts or /posts.json
   def index
+    # return only posts of all friends
     @posts = Post.all
   end
 
