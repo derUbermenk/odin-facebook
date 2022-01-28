@@ -61,8 +61,13 @@ RSpec.describe User, type: :model do
     it { should have_many(:accepted_friendships) }
 
     # accepted_friends, for the recipient side of an accepted connection
+    # return users
+    it { should have_many(:accepted_friends) }
 
     # added_friends, for the initiator side of an accepted connection
+    it { should have_many(:added_friends) }
+
+
   end
 
   describe 'Instance Methods' do
