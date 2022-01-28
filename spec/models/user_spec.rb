@@ -59,23 +59,19 @@ RSpec.describe User, type: :model do
     it { should have_many(:received_friend_requests) }
     it { should have_many(:initiated_friendships) }
     it { should have_many(:accepted_friendships) }
+
+    # accepted_friends, for the recipient side of an accepted connection
+
+    # added_friends, for the initiator side of an accepted connection
   end
 
   describe 'Instance Methods' do
-    include_context 'user_and_connections'
-
-    before :example do
-      # see setup_connections for user_connections
-      setup_users # make 6 users
-      setup_connections # connect those users
-
-      @user0 = @users[0]
-    end
+    include_context 'with existing user database'
 
     describe '#friends' do
       it 'returns all the friends of user' do
         friends = @user0.friends.to_a
-        actual_friends = [@users[2], @users[3]]
+        actual_friends = @user0_friends
 
         expect(friends).to eq(actual_friends)
       end
@@ -85,7 +81,7 @@ RSpec.describe User, type: :model do
       it 'returns all mutual friends of the user and the given user' do
         user3 = @users[3]
         mutual_friends = user3.mutual_friends(@user0)
-        actual_mutual_friends = [@users[1], @users[5]]
+        actual_mutual_friends = @users0_3_mutual
 
         expect(mutual_friends).to eq(actual_mutual_friends)
       end
