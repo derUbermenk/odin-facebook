@@ -66,29 +66,32 @@ RSpec.describe User, type: :model do
 
     # added_friends, for the initiator side of an accepted connection
     it { should have_many(:added_friends) }
-
-
   end
 
   describe 'Instance Methods' do
     include_context 'with existing user database'
 
+    
+    describe '#friendships' do
+      it 'returns all accepted connection with the other friend and the dateofupdate'
+    end
+    
     describe '#friends' do
       it 'returns all the friends of user' do
-        friends = @user0.friends.to_a
+        queried_friends = @user0.friends.to_a
         actual_friends = @user0_friends
 
-        expect(friends).to eq(actual_friends)
+        expect(queried_friends).to eq(actual_friends)
       end
     end
 
     describe '#mutual_friends' do
       it 'returns all mutual friends of the user and the given user' do
         user3 = @users[3]
-        mutual_friends = user3.mutual_friends(@user0)
+        queried_mutual_friends = user3.mutual_friends(@user0)
         actual_mutual_friends = @users0_3_mutual
 
-        expect(mutual_friends).to eq(actual_mutual_friends)
+        expect(queried_mutual_friends).to eq(actual_mutual_friends)
       end
     end
 

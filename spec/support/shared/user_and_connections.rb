@@ -34,6 +34,7 @@ RSpec.shared_context 'with existing user database' do
 
     # the mutual friends of user0 and 3
     @user0_3_mutual = [@users[2], @users[5]]
+    binding.pry
   end
 
   before :example do
