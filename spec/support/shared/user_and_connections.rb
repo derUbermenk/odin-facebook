@@ -23,18 +23,20 @@ RSpec.shared_context 'with existing user database' do
       create(:user_connection, :accepted, initiator: friend, recipient: @users[3])
     end
 
-    # set user0 and user4 connection as pending
-    create(:user_connection, :pending, initiator: @users[4], recipient: @user0)
+    # the mutual friends of user0 and 3
+    @user0_3_mutual = [@users[2], @users[5]]
+
+    # create user4 and user0 connection as pending
+    @received_requests = create(:user_connection, :pending, initiator: @users[4], recipient: @user0)
+
+    # create user0 and user1 as pending
+    @sent_requests = create(:user_connection, :pending, initiator: @user0, recipient: @users[4])
 
     # set user2 and user4 as nuissance pending
     create(:user_connection, :pending, initiator: @users[2], recipient: @users[4])
 
     # set user5 and user1 as nuissance accepted
     create(:user_connection, :pending, initiator: @users[5], recipient: @users[1])
-
-    # the mutual friends of user0 and 3
-    @user0_3_mutual = [@users[2], @users[5]]
-    binding.pry
   end
 
   before :example do

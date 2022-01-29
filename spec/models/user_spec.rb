@@ -57,25 +57,41 @@ RSpec.describe User, type: :model do
 
     it { should have_many(:sent_friend_requests) }
     it { should have_many(:received_friend_requests) }
-    it { should have_many(:initiated_friendships) }
-    it { should have_many(:accepted_friendships) }
+    # it { should have_many(:initiated_friendships) }
+    # it { should have_many(:accepted_friendships) }
 
     # accepted_friends, for the recipient side of an accepted connection
     # return users
-    it { should have_many(:accepted_friends) }
+    # it { should have_many(:accepted_friends) }
 
     # added_friends, for the initiator side of an accepted connection
-    it { should have_many(:added_friends) }
+    # it { should have_many(:added_friends) }
+
+    describe 'sent_friend_requests' do
+      include_context 'with existing user database'
+      it 'returns all connections where user is initiator with pending status' do
+        sent_friend_requests = @user0.sent_friend_requests
+        expect(sent_friend_requests).to eq([@sent_requests])
+      end
+    end
+
+    describe 'received_friend_requests' do
+      include_context 'with existing user database'
+      it 'returns all connections where user is recipient with pending status' do
+        received_friend_requests = @user0.received_friend_requests
+        expect(received_friend_requests).to eq([@received_requests])
+      end
+    end
+
   end
 
   describe 'Instance Methods' do
     include_context 'with existing user database'
 
-    
     describe '#friendships' do
-      it 'returns all accepted connection with the other friend and the dateofupdate'
+      it 'returns all accepted connection with the other friend and the dateofupdate' 
     end
-    
+
     describe '#friends' do
       it 'returns all the friends of user' do
         queried_friends = @user0.friends.to_a
@@ -88,8 +104,8 @@ RSpec.describe User, type: :model do
     describe '#mutual_friends' do
       it 'returns all mutual friends of the user and the given user' do
         user3 = @users[3]
-        queried_mutual_friends = user3.mutual_friends(@user0)
-        actual_mutual_friends = @users0_3_mutual
+        queried_mutual_friends = user3.mutual_friends(@user0).to_a
+        actual_mutual_friends = @user0_3_mutual
 
         expect(queried_mutual_friends).to eq(actual_mutual_friends)
       end
@@ -97,8 +113,8 @@ RSpec.describe User, type: :model do
 
     describe '#unfriend' do
       it 'removes the targeted user from friends' do
-        @user0.unfriend(@users[0])
-        actual_remaining_friends = [@users[3]]
+        @user0.unfriend(@users[3])
+        actual_remaining_friends = [@users[2], @users[5]]
         remaining_friends = @user0.friends.to_a
 
         expect(remaining_friends).to eq(actual_remaining_friends)
@@ -106,7 +122,7 @@ RSpec.describe User, type: :model do
     end
 
     describe '#accept' do
-      it 'makes the two users as friends'
+      it 'make user as friends with initiator'
     end
   end
 end

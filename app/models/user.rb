@@ -43,6 +43,10 @@ class User < ApplicationRecord
     friends.and other_user.friends
   end
 
+  def unfriend(user)
+    UserConnection.delete_connection(user, self)
+  end
+
   private
 
   def accepted_friends
