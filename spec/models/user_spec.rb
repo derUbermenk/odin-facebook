@@ -88,19 +88,10 @@ RSpec.describe User, type: :model do
     include_context 'with existing user database'
 
     describe '#friendships' do
-      it 'returns the following format for friendships' do
-        # [[id, friend_id, friend_name, accepted_at]]
-        p @user0.friendships
-      end
-
-      it 'returns all accepted connections with the date of accept' do
-        expect(@user0.friendships).to not_eq([])
-      end
-
-      it 'the first entry is the newest added friend' do
-        @user0.accept_request(@users[4])
-
-        expect(@user0.friendships.first[1]).to eq(@users[4].id)
+      it 'the friendships of user in descending order' do
+        expect(@user0.friendships).to eq(@user0_friendships)
+        expect(@user0.friendships.first[1]).to eq(@users[5].id)
+        expect(@user0.friendships.last[1]).to eq(@users[2].id)
       end
     end
 

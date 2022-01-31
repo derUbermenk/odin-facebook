@@ -68,14 +68,16 @@ class User < ApplicationRecord
   end
 
   def accepted_friendships
-    UserConnection.joins(:initiator).where(
-      recipient_id: id, status: :accepted
-    ).pluck('user_connections.id', :initiator_id, 'users.username', :accepted_at)
+    UserConnection.joins(:initiator)
+                  .where(recipient_id: id, status: :accepted)
+                  .order('accepted_at DESC')
+                  .pluck('user_connections.id', :initiator_id, 'users.username', :accepted_at)
   end
 
   def added_friendships
-    UserConnection.joins(:recipient).where(
-      initiator_id: id, status: :accepted
-    ).pluck('user_connections.id', :recipient_id, 'users.username', :accepted_at)
+    UserConnection.joins(:recipient)
+                  .where(initiator_id: id, status: :accepted)
+                  .order('accepted_at DESC')
+                  .pluck('user_connections.id', :recipient_id, 'users.username', :accepted_at)
   end
 end

@@ -13,9 +13,12 @@ RSpec.shared_context 'with existing user database' do
 
     # set user0 friends 2, 3, 5
     @user0_friends = [@users[2], @users[3], @users[5]]
+    @user0_friendships = []
     @user0_friends.each do |friend|
-      create(:user_connection, :accepted, initiator: @user0, recipient: friend)
+      friendship = create(:user_connection, :accepted, initiator: @user0, recipient: friend)
+      @user0_friendships << [friendship.id, friendship.recipient_id, friend.username, friendship.accepted_at]
     end
+    @user0_friendships.reverse!
 
     # set user3 friends 1, 2, 5
     @user3_friends = [@users[1], @users[2], @users[5]]
