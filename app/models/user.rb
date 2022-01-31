@@ -9,30 +9,13 @@ class User < ApplicationRecord
   has_many :comments
 
   # has_many :messages
-  has_many :sent_friend_requests, -> { where status: :pending },
+  has_many :sent_friend_requests,
+           -> { where(status: :pending).includes(:recipient).order(sent_at: :desc) },
            foreign_key: 'initiator_id', class_name: 'UserConnection'
-  has_many :received_friend_requests, -> { where status: :pending },
-           foreign_key: 'recipient_id', class_name: 'UserConnection'
-  # rejecting pending UserConnections deletes the record
-
-=begin
-  # returns UserConnection record
-  has_many :initiated_friendships, -> { where status: :accepted },
-           foreign_key: 'initiator_id', class_name: 'UserConnection'
-  has_many :accepted_friendships, -> { where status: :accepted },
+  has_many :received_friend_requests,
+           -> { where(status: :pending).includes(:initiator).order(sent_at: :desc) },
            foreign_key: 'recipient_id', class_name: 'UserConnection'
 
-  # returns User record
-  # has_many :initiators, through: :initiated_friendships, class_name: 'User'
-  has_many :added_friends, through: :initiated_friendships,
-            source: :recipient
-
-  # has_many :recipients, through: :accepted_friendships, class_name: 'User'
-  has_many :accepted_friends, through: :accepted_friendships,
-            source: :initiator
-=end
-
-  # Validations
   validates :username, :email, presence: true
 
   def friends
@@ -43,13 +26,24 @@ class User < ApplicationRecord
     friends.and other_user.friends
   end
 
+  def unfriend(user)
+    UserConnection.delete_connection(user, self)
+  end
+
+  # sends a friend request
+  def send_request(recipient)
+    sent_friend_requests.create(
+      recipient: recipient
+    )
+  end
+
   # accepts a friend request
   def accept_request(sender)
     UserConnection.accept_connection(sender, self)
   end
 
-  def unfriend(user)
-    UserConnection.delete_connection(user, self)
+  def reject_request(sender)
+    UserConnection.delete_connection(self, sender)
   end
 
   private

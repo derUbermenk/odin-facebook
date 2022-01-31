@@ -124,8 +124,8 @@ RSpec.describe User, type: :model do
       it 'sends a friends request to the specified recipient' do
         @user0.send_request(@users[1])
 
-        expect(@user0.sent_requests).to include({ recipient: @users[1],
-                                                       time: request_time })
+        expect(@user0.sent_friend_requests.to_a.size).to eq 2
+        expect(@user0.sent_friend_requests.first.recipient).to eq @users[1]
       end
     end
 
