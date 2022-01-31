@@ -18,6 +18,10 @@ class User < ApplicationRecord
 
   validates :username, :email, presence: true
 
+  def friendships
+    accepted_friendships | added_friendships
+  end
+
   def friends
     accepted_friends.or added_friends
   end
@@ -48,6 +52,9 @@ class User < ApplicationRecord
 
   private
 
+  # accepted refers to all connections where self is recipient
+  # added refers to all connections where self is initiator
+
   def accepted_friends
     # get all friends of self for which user is the recipient in the friendship
     ids = UserConnection.where(recipient: self.id, status: :accepted).pluck(:initiator_id)
@@ -58,5 +65,17 @@ class User < ApplicationRecord
     # get all friends of self for which user is the initiator in the friendship
     ids = UserConnection.where(initiator: self.id, status: :accepted).pluck(:recipient_id)
     User.where(id: ids)
+  end
+
+  def accepted_friendships
+    UserConnection.joins(:initiator).where(
+      recipient_id: id, status: :accepted
+    ).pluck('user_connections.id', :initiator_id, 'users.username', :accepted_at)
+  end
+
+  def added_friendships
+    UserConnection.joins(:recipient).where(
+      initiator_id: id, status: :accepted
+    ).pluck('user_connections.id', :recipient_id, 'users.username', :accepted_at)
   end
 end

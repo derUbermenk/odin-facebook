@@ -88,8 +88,8 @@ RSpec.describe User, type: :model do
     include_context 'with existing user database'
 
     describe '#friendships' do
-      it 'returns the following format' do
-        # [[id, friend, accepted_at]]
+      it 'returns the following format for friendships' do
+        # [[id, friend_id, friend_name, accepted_at]]
         p @user0.friendships
       end
 
@@ -100,7 +100,7 @@ RSpec.describe User, type: :model do
       it 'the first entry is the newest added friend' do
         @user0.accept_request(@users[4])
 
-        expect(@user0.friendships.first[1]).to eq(@users[4])
+        expect(@user0.friendships.first[1]).to eq(@users[4].id)
       end
     end
 
