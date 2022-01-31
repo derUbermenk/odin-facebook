@@ -4,7 +4,6 @@ require 'support/shared/user_and_connections'
 RSpec.describe User, type: :model do
   
   describe 'Validations' do
-
     before(:example) do
       create :user
     end
@@ -121,8 +120,20 @@ RSpec.describe User, type: :model do
       end
     end
 
-    describe '#accept' do
-      it 'make user as friends with initiator'
+    describe '#send_request' do
+      it 'sends a friends request to the specified recipient' do
+        @user0.send_request(@users[1])
+
+        expect(@user0.sent_requests).to include({ recipient: @users[1],
+                                                       time: request_time })
+      end
+    end
+
+    describe '#accept_request' do
+      it 'make user as friends with initiator' do
+        @user0.accept_request(@users[4])
+        expect(@user0.friends.to_a).to include(@users[4])
+      end
     end
   end
 end
