@@ -70,7 +70,7 @@ RSpec.describe User, type: :model do
       include_context 'with existing user database'
       it 'returns all connections where user is initiator with pending status' do
         sent_friend_requests = @user0.sent_friend_requests
-        expect(sent_friend_requests).to eq([@sent_requests])
+        expect(sent_friend_requests).to eq(@sent_requests)
       end
     end
 
@@ -78,7 +78,7 @@ RSpec.describe User, type: :model do
       include_context 'with existing user database'
       it 'returns all connections where user is recipient with pending status' do
         received_friend_requests = @user0.received_friend_requests
-        expect(received_friend_requests).to eq([@received_requests])
+        expect(received_friend_requests).to eq(@received_requests)
       end
     end
 
