@@ -88,7 +88,20 @@ RSpec.describe User, type: :model do
     include_context 'with existing user database'
 
     describe '#friendships' do
-      it 'returns all accepted connection with the other friend and the dateofupdate' 
+      it 'returns the following format' do
+        # [[id, friend, accepted_at]]
+        p @user0.friendships
+      end
+
+      it 'returns all accepted connections with the date of accept' do
+        expect(@user0.friendships).to not_eq([])
+      end
+
+      it 'the first entry is the newest added friend' do
+        @user0.accept_request(@users[4])
+
+        expect(@user0.friendships.first[1]).to eq(@users[4])
+      end
     end
 
     describe '#friends' do
@@ -133,6 +146,13 @@ RSpec.describe User, type: :model do
       it 'make user as friends with initiator' do
         @user0.accept_request(@users[4])
         expect(@user0.friends.to_a).to include(@users[4])
+      end
+    end
+
+    describe '#reject_request' do
+      it 'rejects the request from the given user' do
+        @user0.reject_request(@users[4])
+        expect(@user0.received_friend_requests.to_a).to eq []
       end
     end
   end
