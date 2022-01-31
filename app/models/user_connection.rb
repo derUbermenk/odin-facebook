@@ -9,7 +9,7 @@ class UserConnection < ApplicationRecord
       initiator: initiator,
       recipient: recipient,
       status: :pending
-    )
+    ).save
   end
 
   # turns a connection to an accepted_connection
@@ -29,5 +29,15 @@ class UserConnection < ApplicationRecord
                   .or(UserConnection.where(initiator: user2, recipient: user1))
                   .take
                   .delete
+  end
+
+  private_class_method
+
+  def self.timestamp_attributes_for_create
+    super << 'sent_at'
+  end
+
+  def self.timestamp_attributes_for_update
+    super << 'accepted_at'
   end
 end
