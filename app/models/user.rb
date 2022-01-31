@@ -43,6 +43,11 @@ class User < ApplicationRecord
     friends.and other_user.friends
   end
 
+  # accepts a friend request
+  def accept_request(sender)
+    UserConnection.accept_connection(sender, self)
+  end
+
   def unfriend(user)
     UserConnection.delete_connection(user, self)
   end
