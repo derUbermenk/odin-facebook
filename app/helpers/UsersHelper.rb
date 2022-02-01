@@ -7,11 +7,12 @@ module UsersHelper
       )
     end
 
-    # accepts a friend request
+    # accepts a friend request from the given sender
     def accept_request(sender)
       UserConnection.accept_connection(sender, self)
     end
 
+    # reject request from the given sender
     def reject_request(sender)
       UserConnection.delete_connection(self, sender)
     end
@@ -30,20 +31,27 @@ module UsersHelper
   end
 
   module Friends
+
+    # get the union of all accepted and added friendships
     def friendships
       accepted_friendships | added_friendships
     end
 
+    # get a relation containing all users the are friends 
+    #   with the calling user
     def friends
       accepted_friends.or added_friends
     end
 
+    # get a relation containing all users mutual to other user
+    #   and calling user
     def mutual_friends(other_user)
       friends.and other_user.friends
     end
 
-    def unfriend(user)
-      UserConnection.delete_connection(user, self)
+    # unfriend the friend and the calling user 
+    def unfriend(friend)
+      UserConnection.delete_connection(friend, self)
     end
 
     private
@@ -53,16 +61,19 @@ module UsersHelper
 
     def accepted_friends
       # get all friends of self for which user is the recipient in the friendship
-      ids = UserConnection.where(recipient: self.id, status: :accepted).pluck(:initiator_id)
+      ids = UserConnection.where(recipient: self, status: :accepted).pluck(:initiator_id)
       User.where(id: ids)
     end
 
     def added_friends
       # get all friends of self for which user is the initiator in the friendship
-      ids = UserConnection.where(initiator: self.id, status: :accepted).pluck(:recipient_id)
+      ids = UserConnection.where(initiator: self, status: :accepted).pluck(:recipient_id)
       User.where(id: ids)
     end
 
+    # return a collection of arrays with the following format
+    #   [ connection_id, friend_id, friend.username, accepted_at ]
+    #   which represent all connection for which calling user is a recipient
     def accepted_friendships
       UserConnection.joins(:initiator)
                     .where(recipient_id: id, status: :accepted)
@@ -70,6 +81,7 @@ module UsersHelper
                     .pluck('user_connections.id', :initiator_id, 'users.username', :accepted_at)
     end
 
+    # same as accepted_friendships, but calling user is an initiator
     def added_friendships
       UserConnection.joins(:recipient)
                     .where(initiator_id: id, status: :accepted)
