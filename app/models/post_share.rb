@@ -1,0 +1,2 @@
+class PostShare < ApplicationRecord
+end
