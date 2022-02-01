@@ -31,7 +31,6 @@ module UsersHelper
   end
 
   module Friends
-
     # get the union of all accepted and added friendships
     def friendships
       accepted_friendships | added_friendships
