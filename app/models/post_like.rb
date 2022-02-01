@@ -1,4 +1,4 @@
 class PostLike < ApplicationRecord
-  belongs_to :user
-  belongs_to :post
+  belongs_to :liker, class_name: 'User'
+  belongs_to :post, counter_cache: :likes_count
 end
