@@ -51,6 +51,8 @@ RSpec.describe User, type: :model do
   describe 'Asssociations' do
     it { should have_many(:posts) }
     it { should have_many(:comments) }
+    it { should have_many(:post_likes) }
+    it { should have_many(:liked_posts).class_name('Post') }
     # it { should have_many(:sent_messages) }
     # it { should have_many(:received_messages) }
 
