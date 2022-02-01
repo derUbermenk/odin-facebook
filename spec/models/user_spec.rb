@@ -84,7 +84,7 @@ RSpec.describe User, type: :model do
 
   end
 
-  describe 'Instance Methods' do
+  describe 'Friends Methods' do
     include_context 'with existing user database'
 
     describe '#friendships' do
@@ -147,4 +147,5 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
 end
