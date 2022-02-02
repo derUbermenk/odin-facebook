@@ -150,4 +150,37 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe 'Post Liking Methods' do
+    describe '#like' do
+      it 'likes a post' do
+        @user.like(@post)
+        expect(@post.likers.to_a).to include(@user)
+      end
+
+      it 'increases post likes count' do
+        expect{ @user.like(@post) }.to change{ @post.likes_count }.by(1)
+      end
+
+      it 'adds post to liked post' do
+        @user.like(@post)
+        expect(@user.liked_posts.to_a).to include(@post) # @liked_post has been unliked in previous step
+      end
+    end
+
+    describe '#unlike' do
+      it 'unlikes a post' do
+        @user.unlike(@liked_post)
+        expect(@liked_post.likers.to_a).to_not include(@user)
+      end
+
+      it 'decreases post likes count' do
+        expect{ @user.unlike(@liked_post) }.to change{ @liked_post.likes_count }.by(-1)
+      end
+
+      it 'removes post from liked post' do
+        @user.unlike(@liked_post)
+        expect(@user.liked_posts.to_a).to_not include(@liked_post) # @liked_post has been unliked in previous step
+      end
+    end
+  end
 end
