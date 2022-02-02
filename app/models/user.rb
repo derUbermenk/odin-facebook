@@ -4,10 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-
-  has_many :posts
+  has_many :posts, foreign_key: 'author_id'
   has_many :comments
-
+  has_many :post_likes, foreign_key: 'liker_id'
+  has_many :liked_posts, through: :post_likes, source: :post 
   # has_many :messages
   has_many :sent_friend_requests, UsersHelper::FriendRequest.requests(:recipient),
            foreign_key: 'initiator_id', class_name: 'UserConnection'
