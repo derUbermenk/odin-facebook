@@ -88,4 +88,15 @@ module UsersHelper
                     .pluck('user_connections.id', :recipient_id, 'users.username', :accepted_at)
     end
   end
+
+  module PostLiking
+    def like(post)
+      post_likes.create(post: post)
+    end
+
+    def unlike(post)
+      # need to use destroy vs delete in order to for rails to call decrement counter
+      PostLike.find_by(post: post, liker: self).destroy
+    end
+  end
 end
