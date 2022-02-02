@@ -1,5 +1,6 @@
 require 'rails_helper'
-require 'support/shared/user_and_connections'
+require 'support/shared/User/user_and_connections'
+require 'support/shared/User/user_and_likes'
 
 RSpec.describe User, type: :model do
   
@@ -151,6 +152,8 @@ RSpec.describe User, type: :model do
   end
 
   describe 'Post Liking Methods' do
+    include_context 'with existing user, post and postlikes table'
+
     describe '#like' do
       it 'likes a post' do
         @user.like(@post)
