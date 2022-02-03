@@ -96,7 +96,7 @@ module UsersHelper
 
     def unlike(post)
       # need to use destroy vs delete in order to for rails to call decrement counter
-      PostLike.find_by(post: post, liker: self).destroy
+      post_likes.find_by(post: post).destroy
     end
   end
 end
