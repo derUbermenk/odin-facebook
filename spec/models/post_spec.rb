@@ -10,7 +10,7 @@ RSpec.describe Post, type: :model do
 
     # for sharing
     it { should have_many(:shares).class_name('Post') }
-    it { should have_db_column(:shares_count).of_type(:integer) }
+    it { should have_db_column(:attachment_count).of_type(:integer) }
   end
 
   describe 'Validations' do
