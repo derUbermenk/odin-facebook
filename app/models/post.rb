@@ -4,6 +4,12 @@ class Post < ApplicationRecord
   has_many :comments
   has_many :likes, class_name: 'PostLike', counter_cache: :likes_count
 
+  # shares
+  has_many :shares, as: :attachable
+
+  # attachments
+  # has_many :attachments
+
   validates :content, presence: true,
                       length: {
                         in: 1..500,

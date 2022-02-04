@@ -10,7 +10,7 @@ RSpec.describe Post, type: :model do
 
     # for sharing
     it { should have_many(:shares).class_name('Post') }
-    it { should have_db_column(:attachment_count).of_type(:integer) }
+    it { should have_db_column(:attachments_count).of_type(:integer) }
   end
 
   describe 'Validations' do
@@ -43,6 +43,16 @@ RSpec.describe Post, type: :model do
     it 'is invalid when the content is more than 500 letters' do
       subject.content = Array.new(550, 'words').join(' ')
       expect(subject).to_not be_valid
+    end
+  end
+
+  describe 'Shares' do
+    describe '#shares_count' do
+      it 'returns the number of shares of a post' 
+
+      it 'decreases when shares are deleted'
+
+      it 'increases when the post is shared'
     end
   end
 end
