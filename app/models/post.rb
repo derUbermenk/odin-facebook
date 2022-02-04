@@ -5,10 +5,9 @@ class Post < ApplicationRecord
   has_many :likes, class_name: 'PostLike', counter_cache: :likes_count
 
   # shares
-  has_many :shares, as: :attachable
-
-  # attachments
-  # has_many :attachments
+  has_many :attachments, as: :attachable
+  alias_attribute :attachments, :shares
+  alias_attribute :attachments_count, :shares_count
 
   validates :content, presence: true,
                       length: {
