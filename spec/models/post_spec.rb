@@ -9,7 +9,7 @@ RSpec.describe Post, type: :model do
     it { should have_db_column(:likes_count).of_type(:integer) }
 
     # for sharing
-    it { should have_many(:shares).class_name('Post') }
+    it { should have_many(:attachments) }
     it { should have_db_column(:attachments_count).of_type(:integer) }
   end
 
