@@ -183,6 +183,11 @@ RSpec.describe User, type: :model do
 
   describe 'Post Sharing' do
     describe '#share' do
+      before do
+        @user = create :user
+        @post = create :post, author: @user 
+      end
+
       it 'shares a post' do
         expect { @user.share(@post) }.to change { @post.shares_count }.by(1)
       end
