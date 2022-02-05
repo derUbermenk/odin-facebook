@@ -10,9 +10,13 @@ class Post < ApplicationRecord
 
   has_many :attachments
 
-  validates :content, presence: true,
-                      length: {
-                        in: 1..500,
-                        tokenizer: ->(str) { str.split }
-                      }
+  validate :content_or_attachment
+  validates :content, length: { maximum: 500 }
+
+  # validates :attachments, presence: true, unless: :content
+
+  def content_or_attachment
+    error_message = 'must be present if no attachments included'
+    content.blank? && attachments.blank? && errors.add(:content, error_message)
+  end
 end
