@@ -74,11 +74,32 @@ RSpec.describe Post, type: :model do
 
   describe 'Shares' do
     describe '#shares_count' do
-      it 'returns the number of shares of a post' 
+      before do
+        @user = create :user
 
-      it 'decreases when shares are deleted'
+        @user2 = create :user, email: 'user2@email.com'
+        @post = create :post, author: @user2
 
-      it 'increases when the post is shared'
+        2.times { @user.share(@post) } # create two shares of post
+      end
+
+      it 'returns the number of shares of a post' do
+        expect(@post.shares_count).to eq(2)
+      end
+
+      it 'decreases when shares are deleted' do
+        expect {
+          @user.posts.last.destroy
+          @post.reload
+        }.to change { @post.shares_count }.by(-1)
+      end
+
+      it 'increases when the post is shared' do
+        expect {
+          @user.share(@post)
+          @post.reload
+        }.to change { @post.shares_count }.by(1)
+      end
     end
   end
 end

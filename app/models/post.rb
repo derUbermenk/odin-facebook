@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   has_many :shares, as: :attachable
   alias_attribute :shares_count, :attaches_count
 
-  has_many :attachments
+  has_many :attachments, dependent: :destroy
 
   validate :content_or_attachment
   validates :content, length: { maximum: 500 }
