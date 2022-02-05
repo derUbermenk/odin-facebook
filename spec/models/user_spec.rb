@@ -156,13 +156,12 @@ RSpec.describe User, type: :model do
 
     describe '#like' do
       it 'likes a post' do
-        @user.like(@post)
         expect{ @user.like(@post) }.to change{ @post.likes_count }.by(1)
       end
 
       it 'adds post to liked post' do
         @user.like(@post)
-        expect(@user.liked_posts).to include(@post) # @liked_post has been unliked in previous step
+        expect(@user.liked_posts).to include(@post)
       end
     end
 
@@ -175,7 +174,7 @@ RSpec.describe User, type: :model do
 
       it 'removes post from liked post' do
         @user.unlike(@liked_post)
-        @liked_post.reload 
+        @liked_post.reload
         expect(@user.liked_posts).to_not include(@liked_post) # @liked_post has been unliked in previous step
       end
     end
@@ -185,7 +184,7 @@ RSpec.describe User, type: :model do
     describe '#share' do
       before do
         @user = create :user
-        @post = create :post, author: @user 
+        @post = create :post, author: @user
       end
 
       it 'shares a post' do
@@ -193,7 +192,8 @@ RSpec.describe User, type: :model do
       end
 
       it 'creates a post with an attached post' do
-        @new_post = @user.share(@post)
+        @user.share(@post)
+        @new_post = @user.posts.last
         expect(@new_post.attachments.first.attachable).to eq(@post)
       end
     end

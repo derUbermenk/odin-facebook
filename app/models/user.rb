@@ -20,4 +20,5 @@ class User < ApplicationRecord
   include UsersHelper::FriendRequest
   include UsersHelper::Friends
   include UsersHelper::PostLiking
+  include UsersHelper::PostSharing
 end
