@@ -180,4 +180,17 @@ RSpec.describe User, type: :model do
       end
     end
   end
+
+  describe 'Post Sharing' do
+    describe '#share' do
+      it 'shares a post' do
+        expect { @user.share(@post) }.to change { @post.shares_count }.by(1)
+      end
+
+      it 'creates a post with an attached post' do
+        @new_post = @user.share(@post)
+        expect(@new_post.attachments.first.attachable).to eq(@post)
+      end
+    end
+  end
 end

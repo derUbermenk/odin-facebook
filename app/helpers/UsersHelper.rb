@@ -99,4 +99,11 @@ module UsersHelper
       post_likes.find_by(post: post).destroy
     end
   end
+
+  module PostSharing
+    def share(post)
+      new_post = posts.new.attach(post)
+      new_post.save
+    end
+  end
 end
