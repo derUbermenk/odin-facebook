@@ -7,5 +7,6 @@ RSpec.describe Attachment, type: :model do
 
     it { should have_db_column(:attachable_id) }
     it { should have_db_column(:attachable_type) }
+    it { should have_db_column(:attaches_count) }
   end
 end
