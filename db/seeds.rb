@@ -8,7 +8,7 @@
 require 'faker'
 
 # create default_user
-User.create(
+default_user = User.create(
   username: 'Default User',
   email: 'default@password.com',
   password: 'default_password'
@@ -19,7 +19,38 @@ User.create(
   User.create(
     username: user_name,
     email: Faker::Internet.unique.email(name: user_name),
-    password: 'haketh' 
+    password: 'haketh'
+  )
+end
+
+# 5 user be friends with default user 
+user_friends = User.where.not(username: default_user.email).limit(5)
+user_friends.each_with_index do |friend, i|
+  if i.even?
+    UserConnection.create(
+      initiator: friend,
+      recipient: default_user,
+      status: :accepted
+    )
+  else
+    UserConnection.create(
+      initiator: default_user,
+      recipient: friend,
+      status: :accepted
+    )
+  end
+end
+
+# make all users create a post
+User.all.each do |user|
+  quote_sources = [
+    -> { Faker::Movies::Hobbit.quote },
+    -> { Faker::TvShows::DrWho.quote },
+    -> { Faker::TvShows::SiliconValley.quote }
+  ]
+
+  user.posts.create(
+    content: quote_sources.sample.call
   )
 end
 
