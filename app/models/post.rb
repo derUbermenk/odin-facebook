@@ -19,4 +19,11 @@ class Post < ApplicationRecord
     error_message = 'must be present if no attachments included'
     content.blank? && attachments.blank? && errors.add(:content, error_message)
   end
+
+  # returns the all the posts for the given user 
+  def self.feed(user)
+    user_and_friends = user.friends.pluck(:id) << user.id
+
+    Post.where(author_id: user_and_friends).order('created_at DESC')
+  end
 end
