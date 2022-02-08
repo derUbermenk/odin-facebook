@@ -13,8 +13,9 @@
   <div>
   <div>
     <span> <%= link_to 'Like' %> </span>
-    <span> <%= link_to 'Comment' %> </span>
     <span> <%= link_to 'Share' %> </span>
   </div>
+  <%= render "comments/form", commentable: post, commenter: current_user %>
+  <%= render "comments/comment", collection: post.comments %>
   <br>
 </div>
