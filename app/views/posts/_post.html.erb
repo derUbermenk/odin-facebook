@@ -16,6 +16,6 @@
     <span> <%= link_to 'Share' %> </span>
   </div>
   <%= render "comments/form", commentable: post, commenter: current_user %>
-  <%= render "comments/comment", collection: post.comments %>
+  <%= render partial: "comments/comment", collection: post.comments.where.not(id: nil) %>
   <br>
 </div>
