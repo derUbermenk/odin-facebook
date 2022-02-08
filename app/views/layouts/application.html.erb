@@ -11,6 +11,19 @@
   </head>
 
   <body>
+    <nav>
+      <div class="brand">
+        <%= link_to root_path do %>
+          <h1>FakeBook</h1>
+        <% end%>
+      </div>
+
+      <div class="menu">
+          <div> <%= link_to 'Messages' %> </div>
+          <div> <%= link_to 'Friends' %> </div>
+          <div> <%= link_to 'Notification' %> </a></div>
+      </div>
+    </nav>
     <%= yield %>
   </body>
 </html>
