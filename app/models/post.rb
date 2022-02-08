@@ -20,6 +20,22 @@ class Post < ApplicationRecord
     content.blank? && attachments.blank? && errors.add(:content, error_message)
   end
 
+  def time
+    current_year = Time.now.year
+    days_since_post = ((Time.now - updated_at)/1.day).ceil
+    hours_since_post = (Time.now - updated_at.to_time).ceil
+
+    if current_year > updated_at.year
+      updated_at.strftime("%b %d, %Y")
+    elsif days_since_post >= 7 
+      updated_at.strftime("%b %d")
+    elsif hours_since_post > 6
+      updated_at.strftime("%A")
+    else
+      "#{hours_since_post} hr"
+    end
+  end
+
   # returns the all the posts for the given user 
   def self.feed(user)
     user_and_friends = user.friends.pluck(:id) << user.id
