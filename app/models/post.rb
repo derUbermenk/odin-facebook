@@ -19,4 +19,16 @@ class Post < ApplicationRecord
     error_message = 'must be present if no attachments included'
     content.blank? && attachments.blank? && errors.add(:content, error_message)
   end
+
+  def time
+    if current_year > updated_at.year
+      updated_at.strftime("%b %d, %Y")
+    elsif days_since_post >= 7
+      updated_at.strftime("%b %d")
+    elsif hours_since_post > 6
+      updated_at.strftime("%A")
+    else
+      "#{hours_since_post} hr"
+    end
+  end
 end
