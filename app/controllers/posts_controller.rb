@@ -59,6 +59,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def toggle_like
+    @post = post.find_by(id: params[:id])
+
+    current_user.liked?(post) ? current_user.unlike(@post) : current_user.like(post)
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_post
