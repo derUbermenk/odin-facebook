@@ -4,7 +4,13 @@ function toggleLike(postId, innerHTML) {
   let like_button = document.querySelector(
     `.like-toggle[data-id='${postId}']`
   )
+
+  let likes_count = document.querySelector(
+    `.likes-count[data-id='${postId}']`
+  )
+
   like_button.innerText = '<%= like_text %>';
+  likes_count.innerText = '<%= likes_count_text %>'
 }
 
 toggleLike(postId);

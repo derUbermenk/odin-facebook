@@ -60,6 +60,8 @@ class PostsController < ApplicationController
   end
 
   def toggle_like
+    @likes_count = @post.likes_count
+
     if current_user.liked?(@post)
       current_user.unlike(@post)
     else

@@ -5,7 +5,12 @@ class ApplicationController < ActionController::Base
     @liked ? 'Unlike' : 'Like'
   end
 
-  helper_method :like_text
+  def likes_count_text
+    operation = @liked ? '+' : '-'
+    @likes_count.send(operation, 1)
+  end
+
+  helper_method :like_text, :likes_count_text
 
   protected
   def authenticate_user!
