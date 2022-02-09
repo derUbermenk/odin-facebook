@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy toggle_like ]
   before_action :authenticate_user!
 
   # GET /posts or /posts.json
@@ -56,6 +56,22 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  def toggle_like
+    @likes_count = @post.likes_count
+
+    if current_user.liked?(@post)
+      current_user.unlike(@post)
+    else
+      current_user.like(@post)
+      @liked = true
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.js {}
     end
   end
 
