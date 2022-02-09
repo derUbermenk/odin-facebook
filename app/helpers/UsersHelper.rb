@@ -98,6 +98,10 @@ module UsersHelper
       # need to use destroy vs delete in order to for rails to call decrement counter
       post_likes.find_by(post: post).destroy
     end
+
+    def liked?(post)
+      post.in?(liked_posts)
+    end
   end
 
   module PostSharing
