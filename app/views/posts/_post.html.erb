@@ -12,7 +12,13 @@
     <span> <%= post.shares_count %> shares </span> 
   <div>
   <div>
-    <span> <%= link_to 'Like' %> </span>
+    <span> 
+      <%= link_to toggle_like_post_path(post), remote: true, method: :post do %>
+        <span class='like-toggle' data-id ='<%= post.id %>' > 
+          <%= current_user.liked?(post) ? 'Unlike' : 'Like' %>
+        </span> 
+      <% end %>
+    </span>
     <span> <%= link_to 'Share' %> </span>
   </div>
   <%= render "comments/form", comment: Comment.new(post: post) %>

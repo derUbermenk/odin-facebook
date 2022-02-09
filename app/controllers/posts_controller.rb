@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy ]
+  before_action :set_post, only: %i[ show edit update destroy toggle_like ]
   before_action :authenticate_user!
 
   # GET /posts or /posts.json
@@ -60,7 +60,17 @@ class PostsController < ApplicationController
   end
 
   def toggle_like
-    current_user.liked?(@post) ? current_user.unlike(@post) : current_user.like(@post)
+    if current_user.liked?(@post)
+      current_user.unlike(@post)
+    else
+      current_user.like(@post)
+      @liked = true
+    end
+
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
   end
 
   private
