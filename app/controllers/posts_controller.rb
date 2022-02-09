@@ -60,9 +60,7 @@ class PostsController < ApplicationController
   end
 
   def toggle_like
-    @post = post.find_by(id: params[:id])
-
-    current_user.liked?(post) ? current_user.unlike(@post) : current_user.like(post)
+    current_user.liked?(@post) ? current_user.unlike(@post) : current_user.like(@post)
   end
 
   private
