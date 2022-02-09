@@ -1,0 +1,7 @@
+<%= form_with(model: comment ) do |form| %>
+  <div class="field">
+    <%= form.text_field :content, placeholder: 'Write a comment' %>
+  </div>  
+
+  <%= form.hidden_field :post_id, value: comment.post.id %>
+<% end %>
