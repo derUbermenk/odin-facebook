@@ -102,4 +102,37 @@ RSpec.describe Post, type: :model do
       end
     end
   end
+
+  describe 'Feed' do
+    before do
+      # create 3 users
+      3.times do |i|
+        create :user, email: "#{i}@email.com"
+      end
+
+      # make user 0 and 1 to be friends
+      @user = User.first
+      @user_friend = User.all[1]
+
+      UserConnection.create(
+        initiator: @user_friend,
+        recipient: @user,
+        status: :accepted
+      ) 
+
+      # make each user post something 
+      User.all.each do |user|
+        user.posts.create(
+          content: user.email
+        )
+      end
+      # expected_user_feed = user0.posts + user1.posts
+      @expected_user_feed = Post.where(author_id: [@user.id, @user_friend.id]).order('created_at DESC')
+    end
+
+    it 'returns all posts that are from user and friends' do
+      posts = Post.feed(@user).pluck(:id)
+      expect(posts).to eq(@expected_user_feed.pluck(:id))
+    end
+  end
 end
