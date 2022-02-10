@@ -2,8 +2,14 @@
   <div> <%= link_to post.author.username %> </div>
   <div> <small> <%= post.time %> </small> </div>
 
-  <div>
+  <div name='content'>
     <p> <%= post.content %> <p>
+
+    <% post.attachments.each do |attachment| %>
+      <p> 
+        <%= render('shared_post', post: attachment.attachable) if attachment.attachable_type == 'Post' %>
+      </p>
+    <% end%>
   </div>
 
   <div>
