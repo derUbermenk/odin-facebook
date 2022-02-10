@@ -108,7 +108,7 @@ module UsersHelper
     def share(post)
       new_post = posts.new
       new_post.attachments.build(attachable: post)
-      new_post.save
+      new_post.save!
       new_post
     end
   end

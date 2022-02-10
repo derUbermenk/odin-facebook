@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy toggle_like ]
+  before_action :set_post, only: %i[ show edit update destroy toggle_like share ]
   before_action :authenticate_user!
 
   # GET /posts or /posts.json
@@ -68,6 +68,15 @@ class PostsController < ApplicationController
       current_user.like(@post)
       @liked = true
     end
+
+    respond_to do |format|
+      format.html {}
+      format.js {}
+    end
+  end
+
+  def share
+    current_user.share(@post)
 
     respond_to do |format|
       format.html {}
