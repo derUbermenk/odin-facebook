@@ -52,6 +52,7 @@ group :development do
   # Automatically run tests with guard
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem 'pry-byebug'
 end
 
 group :test do
