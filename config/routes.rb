@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :posts do
     member do
       post 'toggle_like', to: 'posts#toggle_like'
+      get 'share_post', to: 'posts#share_post'
     end
   end
   resources :comments 
