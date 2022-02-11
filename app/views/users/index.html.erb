@@ -1,0 +1,15 @@
+<div name="friends">
+</div>
+
+<div name="friend_requests">
+  <%= link_to 'Friend Requests' %>
+</div>
+
+<div name="friend_suggestions">
+  <% @friend_suggestions.each do |friend_suggestion| %>
+    <section name="suggestion">
+      <span name="user_link"> <%= link_to friend_suggestion.username, user_path(friend_suggestion.id) %> </span> 
+      <span name="request_button"> <%= link_to 'Add friend', add_friend_path(friend_suggestion), method: :post %> </span>
+    </section>
+  <% end %>
+</div>
