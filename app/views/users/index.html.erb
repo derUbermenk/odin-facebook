@@ -1,11 +1,18 @@
 <div name="friends">
+  <h3>Friends</h3>
+  <% @friends.each do |friend| %>
+    <div> <%= link_to friend.username, user_path(friend) %> </div>
+  <% end %>
 </div>
+<br>
 
 <div name="friend_requests">
   <%= link_to 'Friend Requests' %>
 </div>
+<br>
 
 <div name="friend_suggestions">
+  <h3>People</h3>
   <% @friend_suggestions.each do |friend_suggestion| %>
     <section name="suggestion">
       <span name="user_link"> <%= link_to friend_suggestion.username, user_path(friend_suggestion.id) %> </span> 
