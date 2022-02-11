@@ -53,6 +53,12 @@ module UsersHelper
       UserConnection.delete_connection(friend, self)
     end
 
+    def suggested_users
+      suggested_id = friends.pluck(:id) | sent_friend_requests.pluck(:recipient_id) | received_friend_requests.pluck(:initiator_id)
+
+      User.where.not(id: suggested_id << id)
+    end
+
     private
 
     # accepted refers to all connections where self is recipient

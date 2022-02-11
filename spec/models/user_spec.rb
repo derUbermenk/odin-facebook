@@ -90,6 +90,16 @@ RSpec.describe User, type: :model do
   describe 'Friends Methods' do
     include_context 'with existing user database'
 
+    describe '#suggested_users' do
+      it 'returns all users that have not are not friends with user and have not sent or received
+        a friend request from current_user' do
+        suggested_users = [create(:user, email: 'test_email@email.com')]
+
+        expect(@user0.suggested_users.to_a).to eq(suggested_users)
+      end
+    end
+
+
     describe '#friendships' do
       it 'the friendships of user in descending order' do
         expect(@user0.friendships).to eq(@user0_friendships)

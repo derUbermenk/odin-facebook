@@ -33,7 +33,7 @@ RSpec.shared_context 'with existing user database' do
     @received_requests = [create(:user_connection, :pending, initiator: @users[4], recipient: @user0)]
 
     # create user0 and user1 as pending
-    @sent_requests = [create(:user_connection, :pending, initiator: @user0, recipient: @users[4])]
+    @sent_requests = [create(:user_connection, :pending, initiator: @user0, recipient: @users[1])]
 
     # set user2 and user4 as nuissance pending
     create(:user_connection, :pending, initiator: @users[2], recipient: @users[4])
