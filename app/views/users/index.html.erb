@@ -1,5 +1,5 @@
 <div name="friends">
-  <h3>Friends</h3>
+  <strong>Friends</strong><br>
   <% @friends.each do |friend| %>
     <div> <%= link_to friend.username, user_path(friend) %> </div>
   <% end %>
@@ -12,11 +12,13 @@
 <br>
 
 <div name="friend_suggestions">
-  <h3>People</h3>
+  <strong>People</strong><br>
   <% @friend_suggestions.each do |friend_suggestion| %>
     <section name="suggestion">
       <span name="user_link"> <%= link_to friend_suggestion.username, user_path(friend_suggestion.id) %> </span> 
-      <span name="request_button"> <%= link_to 'Add friend', add_friend_path(friend_suggestion), method: :post %> </span>
+      <span name="request_button"> <%= link_to 'Add friend', add_friend_path(friend_suggestion), method: :post %> </span> <br>
+      <% mutual_friends_count = friend_suggestion.mutual_friends(current_user).count %> 
+      <sup> <%= pluralize(mutual_friends_count, 'mutual friend' ) %> </small>
     </section>
   <% end %>
 </div>
