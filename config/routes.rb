@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     member do
       put '/', to: 'user_connections#update', as: :accept
       delete '/reject', to: 'user_connections#destroy', as: :reject
+      delete '/cancel', to: 'user_connections#destroy', as: :cancel
       delete '/unfriend', to: 'user_connections#destroy', as: :delete
     end
   end
