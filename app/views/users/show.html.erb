@@ -1,0 +1,22 @@
+<div class="user">
+  <div class="user-info">
+    <strong><%= @user.username %> </strong><br>
+    <small> <%= pluralize(@user_friends_count, 'friend') %> </small>
+    <small> <%= pluralize(@mutual_friends_count, 'mutual friend') %> </small>
+  </div>
+  <div class="user-interaction">
+    <button class="connection">
+      <!-- toggle connection -->
+      <!-- add friend or cancel request -->
+      <!-- add friend or unfriend -->
+    </button>
+
+    <button class="message">
+      <!-- link_to Message, message_path -->
+    </button>
+  </div>
+</div>
+
+<div class="user-posts">
+  <%= render partial: 'posts/post', collection: @posts %>
+</div>
