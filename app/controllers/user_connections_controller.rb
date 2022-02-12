@@ -1,21 +1,25 @@
 class UserConnectionsController < ApplicationController
+  before action :set_post, except: %i[create]
   before_action :authenticate_user!
 
   def create
-    recipient = User.find(params[:id])
-    @request = current_user.sent_friend_requests.new(
-      recipient: recipient,
-      status: :pending
-    )
+    recipient = User.find(params[:user_id])
+    @request = current_user.sent_friend_requests.build recipient: recipient
+    @request.save
+  end
 
-    respond_to do |format|
-      if @request.save
-        format.html {}
-        format.js {}
-      else
-        format.html {}
-        format.js {}
-      end
-    end
+  def update
+    @connection.status = :accepted
+    @connection.save
+  end
+
+  def destroy
+    @connection.destroy
+  end
+
+  private
+
+  def set_connection
+    @connection = post.find(params[:id])
   end
 end
