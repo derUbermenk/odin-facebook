@@ -16,7 +16,7 @@
   <% @friend_suggestions.each do |friend_suggestion| %>
     <section name="suggestion">
       <span name="user_link"> <%= link_to friend_suggestion.username, user_path(friend_suggestion.id) %> </span> 
-      <span name="request_button"> <%= link_to 'Add friend', add_friend_path(friend_suggestion), method: :post %> </span> <br>
+      <span name="request_button"> <%= link_to 'Add friend', add_user_connections_path(friend_suggestion), method: :post %> </span> <br>
       <% mutual_friends_count = friend_suggestion.mutual_friends(current_user).count %> 
       <sup> <%= pluralize(mutual_friends_count, 'mutual friend' ) %> </small>
     </section>
