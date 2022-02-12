@@ -31,8 +31,22 @@ class UserConnection < ApplicationRecord
                   .delete
   end
 
+  # looks for the connection with the given users
+  def self.find_with_users(user1, user2)
+    where(
+      initiator: user1,
+      recipient: user2
+    ).or(
+      where(
+        initiator: user2,
+        recipient: user1
+      )
+    ).take
+  end
+
   private_class_method
 
+  # rename date columns
   def self.timestamp_attributes_for_create
     super << 'sent_at'
   end
