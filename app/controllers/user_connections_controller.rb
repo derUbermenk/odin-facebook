@@ -1,11 +1,15 @@
 class UserConnectionsController < ApplicationController
-  before action :set_post, except: %i[create]
+  before_action :set_connection, except: %i[index create] 
   before_action :authenticate_user!
 
   def create
     recipient = User.find(params[:user_id])
     @request = current_user.sent_friend_requests.build recipient: recipient
     @request.save
+
+    respond_to do |format|
+      format.js{}
+    end
   end
 
   def update
@@ -18,8 +22,7 @@ class UserConnectionsController < ApplicationController
   end
 
   private
-
-  def set_connection
-    @connection = post.find(params[:id])
-  end
+    def set_connection
+      @connection = UserConnection.find(params[:id])
+    end
 end
