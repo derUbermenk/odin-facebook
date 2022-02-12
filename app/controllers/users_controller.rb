@@ -10,5 +10,6 @@ class UsersController < ApplicationController
     @user_friends_count = @user.friends.count
     @mutual_friends_count = @user.mutual_friends(current_user).count
     @posts = Post.where(author: @user)
+    @connection = UserConnection.find_with_users(@user, current_user)
   end
 end
