@@ -3,6 +3,11 @@ class UserConnection < ApplicationRecord
   belongs_to :initiator, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
 
+  # check if a connection is pending
+  def pending?
+    status == :pending
+  end
+
   # creates a connection
   def self.request_connection(initiator, recipient)
     UserConnection.create(
