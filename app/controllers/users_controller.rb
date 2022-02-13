@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     @received_requests = current_user.received_friend_requests
-    @suggestions = current_user.suggested_users
+    @suggestions = User.no_connections(current_user)
   end
 
   def show

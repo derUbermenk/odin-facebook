@@ -48,15 +48,15 @@ module UsersHelper
       friends.and other_user.friends
     end
 
-    # unfriend the friend and the calling user 
+    # unfriend the friend and the calling user
     def unfriend(friend)
       UserConnection.delete_connection(friend, self)
     end
 
-    def suggested_users
-      do_not_suggest = friends.pluck(:id) | sent_friend_requests.pluck(:recipient_id) | received_friend_requests.pluck(:initiator_id)
-
-      User.where.not(id: do_not_suggest << id )
+    # returns all users that have no connections with user
+    def self.no_connections(user)
+      exclude_ids = user.friends.pluck(:id) | user.sent_friend_requests.pluck(:recipient_id) | user.received_friend_requests.pluck(:initiator_id)
+      User.where.not(id: exclude_ids).order("RANDOM()").limit(20)
     end
 
     private
