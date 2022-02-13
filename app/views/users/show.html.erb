@@ -5,15 +5,7 @@
     <small> <%= pluralize(@mutual_friends_count, 'mutual friend') %> </small>
   </div>
   <div class="user-interaction">
-    <button class="connection">
-      <!-- toggle connection -->
-      <!-- add friend or cancel request -->
-      <!-- add friend or unfriend -->
-    </button>
-
-    <button class="message">
-      <!-- link_to Message, message_path -->
-    </button>
+    <%= render 'connection_interface', connection: @connection, viewee: @user %>
   </div>
 </div>
 

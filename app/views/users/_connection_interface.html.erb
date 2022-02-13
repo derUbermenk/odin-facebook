@@ -1,0 +1,47 @@
+<div class="connection-interface">
+  <!-- connection is nil then not friends, nor requested -->
+  <% if connection.nil? %>
+
+    <%= link_to add_user_connections_path(viewee), remote: true, method: :post do %>
+      <button class="add-friend">
+        Add Friend
+      </button>
+    <% end %>
+
+  <% elsif connection.pending? %>
+    <% case connection.initiator %>
+    <% when viewee %>
+      <div class="connection-message">
+        <strong><%= viewee.username %> </strong> sent you a message
+      </div>
+
+      <%= link_to accept_user_connection_path(connection), remote: true, method: :put do %>
+        <button class="accept-request">
+          Accept  
+        </button>
+      <% end %>
+
+      <%= link_to reject_user_connection_path(connection), remote: true, method: :delete do %>
+        <button class="reject-request">
+          Delete 
+        </button>
+      <% end %>
+
+    <% when current_user %>
+      <%= link_to cancel_user_connection_path(connection), remote: true, method: :delete do %>
+        <button class="cancel-request">
+          Cancel 
+        </button>
+      <% end %>
+    <% end %>
+
+  <% else %>
+
+    <%= link_to delete_user_connection_path(connection), remote: true, method: :delete do %>
+      <button class="unfriend">
+        Unfriend
+      </button>
+    <% end %>
+
+  <% end %>
+</div>
