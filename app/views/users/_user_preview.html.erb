@@ -1,0 +1,10 @@
+<div class="user-preview">
+  <%= link_to user_path(user) do %>
+    <div class="name">
+      <%= user.username %>
+    </div>
+    <div class="mutual-friend-count">
+      <%= user.mutual_friends(current_user).count %>
+    </div>
+  <% end %>
+</div>
