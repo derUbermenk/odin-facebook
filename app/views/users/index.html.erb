@@ -1,5 +1,10 @@
 <br>
 <div class="friend-requests">
+  <h3>Friend Requests</h3>
+  <% if @received_requests.empty? %>
+    <div><i><small>No friend requests received</small></i></div>
+  <% end %>
+
   <% @received_requests.each do |received_request| %>
     <% initiator = received_request.initiator %>
     <%= render 'user_preview', user: initiator %>
@@ -10,8 +15,11 @@
 </div>
 
 <div class="suggestions">
+  <h3>Suggested Users</h3>
   <% @suggestions.each do |suggestion| %>
     <%= render 'user_preview', user: suggestion %>
     <%= render 'add_connection_button', viewee: suggestion %>
+    <br>
+    <br>
   <% end %>
 </div>
