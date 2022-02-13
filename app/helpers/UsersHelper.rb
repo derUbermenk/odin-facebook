@@ -54,9 +54,9 @@ module UsersHelper
     end
 
     def suggested_users
-      suggested_id = friends.pluck(:id) | sent_friend_requests.pluck(:recipient_id) | received_friend_requests.pluck(:initiator_id)
+      do_not_suggest = friends.pluck(:id) | sent_friend_requests.pluck(:recipient_id) | received_friend_requests.pluck(:initiator_id)
 
-      User.where.not(id: suggested_id << id)
+      User.where.not(id: do_not_suggest << id )
     end
 
     private
