@@ -1,0 +1,5 @@
+<%= link_to delete_user_connection_path(connection), remote: true, method: :delete do %>
+  <button class="<%= label %>-request">
+    <%= label.humanize %>
+  </button>
+<% end %>

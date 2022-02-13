@@ -1,0 +1,25 @@
+<div class="connection-interface">
+  <!-- connection is nil then not friends, nor requested -->
+  <% if connection.nil? %>
+
+    <%= render 'add_connection_button', viewee: viewee %>
+
+  <% elsif connection.pending? %>
+
+    <% case connection.initiator %>
+    <% when viewee %>
+      <div class="connection-message">
+        <strong><%= viewee.username %> </strong> sent you a friend request
+      </div>
+
+      <%= render 'accept_connection_button', connection: connection %>
+      <%= render 'delete_connection_button', connection: connection, label: 'delete' %>
+
+    <% when current_user %>
+      <%= render 'delete_connection_button', connection: connection, label: 'cancel' %>
+    <% end %>
+
+  <% else %>
+      <%= render 'delete_connection_button', connection: connection, label: 'unfriend' %>
+  <% end %>
+</div>
