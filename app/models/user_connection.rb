@@ -3,6 +3,19 @@ class UserConnection < ApplicationRecord
   belongs_to :initiator, class_name: 'User'
   belongs_to :recipient, class_name: 'User'
 
+  validates :status, :initiator, :recipient, presence: true
+  validate :no_connections_yet, :no_connections_with_self
+
+  def no_connections_yet
+    error_message = 'Connection between two users already exists'
+    UserConnection.find_with_users(initiator, recipient).nil? || errors.add(:status, error_message)
+  end
+
+  def no_connections_with_self
+    error_message = "Can't establish a connection with self"
+    recipient == initiator && errors.add(:initiator, error_message)
+  end
+
   # creates a connection
   def self.request_connection(initiator, recipient)
     UserConnection.create(

@@ -9,8 +9,8 @@ FactoryBot.define do
       status { 1 }
     end
 
-    initiator_id { }
-    recipient_id { }
+    initiator { }
+    recipient { }
 
   end
 end
