@@ -4,6 +4,7 @@ Rails.application.routes.draw do
     member do
       post 'toggle_like', to: 'posts#toggle_like'
       post 'share', to: 'posts#share'
+      get 'share_with_content', to: 'posts#new'
     end
   end
   resources :comments
