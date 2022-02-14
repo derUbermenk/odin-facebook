@@ -7,6 +7,8 @@ Rails.application.routes.draw do
     end
   end
   resources :comments
+
+  get 'profile', to: 'users#show'
   resources :users
 
   resources :user_connections do
