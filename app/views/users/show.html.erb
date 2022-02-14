@@ -4,14 +4,28 @@
 </div>
 
 <div class="user">
-  <div class="user-info">
-    <strong><%= @user.username %> </strong><br>
-    <small> <%= pluralize(@user_friends_count, 'friend') %> </small>
-    <small> <%= pluralize(@mutual_friends_count, 'mutual friend') %> </small>
-  </div>
-  <div class="user-interaction">
-    <%= render 'connection_interface', connection: @connection, viewee: @user %>
-  </div>
+  <% if @user == current_user %>
+
+    <div class="user-info">
+      <strong><%= @user.username %> </strong><br>
+      <small> <%= pluralize(@user_friends_count, 'friend') %> </small>
+    </div>
+    <div class="edit">
+      <small> <%= link_to "Edit Profile", edit_user_path(@user) %> </small>
+    </div>
+
+  <% else%>
+
+    <div class="user-info">
+      <strong><%= @user.username %> </strong><br>
+      <small> <%= pluralize(@user_friends_count, 'friend') %> </small>
+      <small> <%= pluralize(@mutual_friends_count, 'mutual friend') %> </small>
+    </div>
+    <div class="user-interaction">
+      <%= render 'connection_interface', connection: @connection, viewee: @user %>
+    </div>
+
+  <% end %>
 </div>
 
 <div class="break">
