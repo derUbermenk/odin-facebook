@@ -17,6 +17,8 @@
 
   <%= render 'shared_post', post: @attached_post if @attached_post %>
 
+  <%= form.hidden_field :attachment, value: @attached_post.id %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
