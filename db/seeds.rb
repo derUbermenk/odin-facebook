@@ -43,7 +43,7 @@ end
 # make random friendships with among other users
 User.where.not(id: default_user.id).each do |user|
   # make about 5 to 17 friends with each user
-  User.no_connections(user).limit(rand(0..17)).each_with_index do |friend, i|
+  User.no_connections(user).limit(rand(0..50)).each_with_index do |friend, i|
     if i.even?
       UserConnection.create(
         initiator: friend,
@@ -87,7 +87,6 @@ quote_sources = [
   ]
 
 User.all.each do |user|
-
   create_time = [
     rand(1..59).minute.ago,
     rand(1..24).hour.ago,
@@ -95,9 +94,9 @@ User.all.each do |user|
     rand(1..3).month.ago,
   ]
 
-  rand(1..8).times do
+  rand(1..3).times do
     time = create_time.sample
-    user.posts.create(
+    user.posts.create!(
       content: quote_sources.sample.call,
       created_at: time,
       updated_at: time
@@ -105,18 +104,15 @@ User.all.each do |user|
   end
 end
 
-# setup likes, commments and shares for posts 
+# setup likes, comments and shares
+percent_75_posts = (Post.count * 0.35).ceil
 Post.all.each do |post|
-  # make only friends of author like and share the post
   author = post.author
 
-  author.friends.limit(12).each do |friend|
-    act_on_post = [true, false, false]
-
-    act_on_post.sample && friend.like(post)
-
-    act_on_post.sample && friend.share(post)
-
-    act_on_post.sample && friend.comments.create(post: p, content: quote_sources.sample.call)
+  act_on_post = [true, false]
+  author.friends.limit(10).each do |friend|
+    friend.like(post) if act_on_post.sample
+    friend.share(post) if (act_on_post.sample && (friend.posts.count < 8)) 
+    friend.comments.create(post: post, content: quote_sources.sample.call) if act_on_post.sample
   end
 end
