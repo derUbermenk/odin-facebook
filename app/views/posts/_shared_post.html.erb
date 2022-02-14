@@ -8,6 +8,6 @@
     <% end%>
   </div>
 
-  <div> <%= link_to post.author.username %> </div>
+  <div> <%= link_to post.author.username, user_path(post.author) %> </div>
   <div> <small> <%= post.time %> </small> </div>
 </div>
