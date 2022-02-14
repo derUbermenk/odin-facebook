@@ -3,7 +3,7 @@
     <p> <%= post.content %> <p>
     <% post.attachments.each do |attachment| %>
       <p> 
-        <div> <%= render('shared_post', post: attachment.attachable) if attachment.attachment_type ==  'Post' %> <div>
+        <div> <%= render('shared_post', post: attachment.attachable) if attachment.attachable_type ==  'Post' %> <div>
       </p>
     <% end%>
   </div>

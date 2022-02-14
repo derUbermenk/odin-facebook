@@ -26,7 +26,10 @@
       <% end %>
     </span>
     <span> 
-      <%= link_to 'Share', share_post_path(post), remote: true, method: :post %> 
+      <%= link_to 'Share now', share_post_path(post), remote: true, method: :post %> 
+    </span>
+    <span>
+      <%= link_to 'Share to Feed', share_with_content_post_path(post), method: :get %>
     </span>
   </div>
   <%= render "comments/form", comment: Comment.new(post: post) %>
