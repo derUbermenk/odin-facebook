@@ -43,6 +43,6 @@ class Post < ApplicationRecord
   def self.feed(user)
     user_and_friends = user.friends.pluck(:id) << user.id
 
-    Post.where(author_id: user_and_friends).order('created_at DESC')
+    Post.where(author_id: user_and_friends).order('created_at DESC').limit(50)
   end
 end
