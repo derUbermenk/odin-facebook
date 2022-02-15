@@ -5,6 +5,6 @@
     </div>
   <% end %>
   <div class="mutual-friend-count">
-    <%= user.mutual_friends(current_user).count %>
+    <%= pluralize(user.mutual_friends(current_user).count, 'mutual friends') %>
   </div>
 </div>
