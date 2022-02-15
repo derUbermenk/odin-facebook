@@ -20,13 +20,15 @@
   <div>
     <span> 
       <%= link_to toggle_like_post_path(post), remote: true, method: :post do %>
-        <span class='like-toggle' data-id ='<%= post.id %>' > 
+        <button class='like-toggle' data-id ='<%= post.id %>' > 
           <%= current_user.liked?(post) ? 'Unlike' : 'Like' %>
-        </span> 
+        </button> 
       <% end %>
     </span>
     <span> 
-      <%= link_to 'Share', share_post_path(post), remote: true, method: :post %> 
+      <%= link_to share_post_path(post), remote: true, method: :post do %> 
+        <button class='share-toggle'>Share</button>
+      <% end %>
     </span>
   </div>
   <%= render "comments/form", comment: Comment.new(post: post) %>
