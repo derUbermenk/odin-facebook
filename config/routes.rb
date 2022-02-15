@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  #devise_for :users
+  devise_for :users
   resources :posts do
     member do
       post 'toggle_like', to: 'posts#toggle_like'
