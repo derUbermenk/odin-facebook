@@ -1,9 +1,9 @@
 <h3>Odin Facebook</h3>
 
 <p>
-This is largely wip, the specific project requirements are listed in the 
+This is still largely wip, the specific project requirements are listed in the 
 <a href="https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-on-rails/lessons/rails-final-project" > project's specification
-</a> in theodinproject. 
+</a> in The Odin Project. 
 
 <p>
   You can see the project deployed in heroku <a href="https://still-plains-64400.herokuapp.com/"> here </a>, the website may
@@ -11,9 +11,8 @@ This is largely wip, the specific project requirements are listed in the
   the following credentials. Likewise, it is not yet named appropriately.
 </p>
 <p>
-  <strong>email:</strong> <i>default@email.com</i> <br>
-  <strong>password:</strong> <i>default@email.com</i> <br>
-  <small><i>yes the password and email are the same</i></small>
+  email: default@email.com
+  password: default@email.com
 </p>
 
 </p>
