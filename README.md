@@ -6,7 +6,7 @@ This is largely wip, the specific project requirements are listed in the
 </a> in theodinproject. 
 
 <p>
-  You can see the project deployed in heroku <a href=""> here </a>, the website may
+  You can see the project deployed in heroku <a href="https://still-plains-64400.herokuapp.com/"> here </a>, the website may
   take some time loading because the dynos in heroku take time to fire up. Please use
   the following credentials. Likewise, it is not yet named appropriately.
 </p>
