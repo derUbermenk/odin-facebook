@@ -11,7 +11,7 @@ This is still largely wip, the specific project requirements are listed in the
   the following credentials. Likewise, it is not yet named appropriately.
 </p>
 <p>
-  email: default@email.com
+  email: default@email.com <br>
   password: default@email.com
 </p>
 
