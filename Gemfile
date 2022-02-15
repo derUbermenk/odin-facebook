@@ -5,6 +5,7 @@ ruby '2.7.2'
 
 gem 'devise'
 gem 'jquery-rails'
+gem 'faker'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails', branch: 'main'
 gem 'rails', '~> 6.1.4', '>= 6.1.4.4'
 # Use postgresql as the database for Active Record
@@ -33,7 +34,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
-  gem 'faker'
   gem 'rspec-rails', '~> 5.0.0'
   gem 'shoulda-matchers'
   gem "factory_bot_rails"
