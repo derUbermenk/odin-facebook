@@ -1,28 +1,28 @@
-# README
+<h3>Odin Facebook</h3>
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+<p>
+This is largely wip, the specific project requirements are listed in the 
+<a href="https://www.theodinproject.com/paths/full-stack-ruby-on-rails/courses/ruby-on-rails/lessons/rails-final-project" > project's specification
+</a> in theodinproject. 
 
-Things you may want to cover:
+<p>
+  You can see the project deployed in heroku <a href=""> here </a>, the website may
+  take some time loading because the dynos in heroku take time to fire up. Please use
+  the following credentials. Likewise, it is not yet named appropriately.
+</p>
+<p>
+  <strong>email:</strong> <i>default@email.com</i> <br>
+  <strong>password:</strong> <i>default@email.com</i> <br>
+  <small><i>yes the password and email are the same</i></small>
+</p>
 
-* Ruby version
+</p>
 
-* System dependencies
+<p>
+The features currently implemented are friends and friend requests, post creation and editing. post liking, comments, and sharing. 
+</p>
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-- [ ] rabbits
-- [x] no
-- [ ] yes
+<p>
+<i>Note:</i><br>
+Post sharing is currently undergoing rework due to it being initially being treated as an attachment, such was planned to handle both video and photo uploads in the feature. The main branch remains to use the initial implementation of post shares however, and work is being in done on a separate branch to mitigate the possibility of a failed design choice.
+</p>
