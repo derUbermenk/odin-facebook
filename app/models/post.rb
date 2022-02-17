@@ -9,6 +9,7 @@ class Post < ApplicationRecord
   alias_attribute :shares_count, :attaches_count
 
   has_many :attachments, dependent: :destroy
+  accepts_nested_attributes_for :attachments
 
   validate :single_attachment_shares
   validate :content_or_attachment
