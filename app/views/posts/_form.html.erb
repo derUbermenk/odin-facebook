@@ -15,9 +15,11 @@
     <%= form.text_area :content, placeholder: 'Post Something' %>
   </div>
 
-  <%= render 'shared_post', post: @attached_post if @attached_post %>
-
-  <%= form.hidden_field :attachment, value: @attached_post.id %>
+  <% if post_to_share %>
+    <%= render 'shared_post', shared_post: post_to_share %> 
+  <% else %>
+    <!-- render attachments -->
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>
