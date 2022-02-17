@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy toggle_like share ]
+  before_action :set_post, only: %i[show edit update destroy toggle_like share]
+  before_action :set_attachable_post, only: :new
   before_action :authenticate_user!
 
   # GET /posts or /posts.json
@@ -16,7 +17,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @post_to_share = Post.where(params[:id]).take
+    @attachable_post ? @post.attachments.build(attachable: @attachable_post) : nil
   end
 
   # GET /posts/1/edit
@@ -26,6 +27,7 @@ class PostsController < ApplicationController
   # POST /posts or /posts.json
   def create
     @post = current_user.posts.new(post_params)
+    binding.pry
 
     respond_to do |format|
       if @post.save
@@ -87,13 +89,17 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def post_params
-      params.require(:post).permit(:content)
-    end
+  def set_attachable_post
+    @attachable_post = Post.where(id: params[:attachable_post]).take
+  end
+
+  # Only allow a list of trusted parameters through.
+  def post_params
+    params.require(:post).permit(:content, attachments_attributes: [:post_id, :attachable_id, :attachable_type])
+  end
 end
