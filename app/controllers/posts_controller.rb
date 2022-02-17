@@ -16,7 +16,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @attached_post = Post.where(id: params[:id]).take
+    @post_to_share = Post.where(params[:id]).take
   end
 
   # GET /posts/1/edit
