@@ -8,9 +8,9 @@ Rails.application.routes.draw do
     end
 
     collection do
-      # share_now bypasses form
-      post 'share_feed/:shared_post', to: 'posts#new', as: :share_feed
-      post 'share_now/:share', to: 'posts#create', as: :share_now
+      # share_feed bypasses form for new posts 
+      post 'share_feed/:attachable_post', to: 'posts#create', as: :share_feed
+      post 'share/:attachable_post', to: 'posts#new', as: :share
     end
   end
   resources :comments
