@@ -118,75 +118,23 @@ RSpec.describe Post, type: :model do
         }.to change { @post.shares_count }.by(1)
       end
     end
-  end
 
-  describe 'Feed' do
-    before do
-      # create 3 users
-      3.times do |i|
-        create :user, email: "#{i}@email.com"
-      end
-
-      # make user 0 and 1 to be friends
-      @user = User.first
-      @user_friend = User.all[1]
-
-      UserConnection.create(
-        initiator: @user_friend,
-        recipient: @user,
-        status: :accepted
-      ) 
-
-      # make each user post something 
-      User.all.each do |user|
-        user.posts.create(
-          content: user.email
-        )
-      end
-      # expected_user_feed = user0.posts + user1.posts
-      @expected_user_feed = Post.where(author_id: [@user.id, @user_friend.id]).order('created_at DESC')
-    end
-
-    it 'returns all posts that are from user and friends' do
-      posts = Post.feed(@user).pluck(:id)
-      expect(posts).to eq(@expected_user_feed.pluck(:id))
-    end
-  end
-end
-
-
-      end
-    end
-
-  end
-
-  describe 'Shares' do
-    describe '#shares_count' do
+    describe '#shared_post' do
       before do
         @user = create :user
-
-        @user2 = create :user, email: 'user2@email.com'
-        @post = create :post, author: @user2
-
-        2.times { @user.share(@post) } # create two shares of post
+        @post = create :post, author: @user
+        @shareable_post = create :post, author: @user
       end
 
-      it 'returns the number of shares of a post' do
-        expect(@post.shares_count).to eq(2)
+      it 'returns nil if there are no shared posts in the collection of attachments'
+
+      it 'return nil if there are no attachments' do
+        expect(@post.shared_post).to be_nil
       end
 
-      it 'decreases when shares are deleted' do
-        expect {
-          @user.posts.last.destroy
-          @post.reload
-        }.to change { @post.shares_count }.by(-1)
-      end
-
-      it 'increases when the post is shared' do
-        expect {
-          @user.share(@post)
-          @post.reload
-        }.to change { @post.shares_count }.by(1)
+      it 'returns the post if the single attachment is a post' do
+        @post.attachments.create(attachable: @shareable_post)
+        expect(@post.shared_post).to eq(@shareable_post)
       end
     end
   end
