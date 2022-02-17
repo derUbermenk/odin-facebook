@@ -5,7 +5,7 @@ class Post < ApplicationRecord
   has_many :likes, class_name: 'PostLike', counter_cache: :likes_count
 
   # attaches refers to all Attachment records where these particular attachable was attached
-  has_many :shares, as: :attachable
+  has_many :shares, as: :attachable, class_name: 'Attachment'
   alias_attribute :shares_count, :attaches_count
 
   has_many :attachments, dependent: :destroy
