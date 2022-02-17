@@ -6,6 +6,12 @@ Rails.application.routes.draw do
       post 'share', to: 'posts#share'
       get 'share_with_content', to: 'posts#new'
     end
+
+    collection do
+      # share_now bypasses form
+      post 'share_feed/:shared_post', to: 'posts#new', as: :share_feed
+      post 'share_now/:share', to: 'posts#create', as: :share_now
+    end
   end
   resources :comments
 
