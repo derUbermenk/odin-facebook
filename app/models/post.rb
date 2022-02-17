@@ -11,7 +11,7 @@ class Post < ApplicationRecord
   has_many :attachments, dependent: :destroy
 
   validate :single_attachment_shares
-  validate :one_attachment_if_sharing
+  validate :content_or_attachment
   validates :content, length: { maximum: 500 }
 
   # validates :attachments, presence: true, unless: :content
@@ -25,6 +25,11 @@ class Post < ApplicationRecord
   def single_attachment_shares 
     error_message = 'Post cannot contain more attachments when sharing other posts'
     shared_post && attachments.many? && errors.add(:attachments, error_message)
+  end
+
+  def shared_post
+    # &.method allows us to anticipate instances where the return of the
+    attachments.first&.attachable
   end
 
   def time
