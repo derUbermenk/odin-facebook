@@ -1,18 +1,18 @@
 Rails.application.routes.draw do
   devise_for :users
+
   resources :posts do
     member do
       post 'toggle_like', to: 'posts#toggle_like'
-      post 'share', to: 'posts#share'
-      get 'share_with_content', to: 'posts#new'
     end
 
     collection do
       # share_feed bypasses form for new posts 
       post 'share_feed/:attachable_post', to: 'posts#create', as: :share_feed
-      post 'share/:attachable_post', to: 'posts#new', as: :share
+      get 'share/:attachable_post', to: 'posts#new', as: :share
     end
   end
+
   resources :comments
 
   get 'profile', to: 'users#show'
