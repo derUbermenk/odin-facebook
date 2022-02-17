@@ -1,13 +1,20 @@
-<div>
+<%= link_to post_path(shared_post), class: 'shared-post-link' do %>
+<div class="shared-post">
+    
   <div name='content'>
-    <p> <%= post.content %> <p>
-    <% post.attachments.each do |attachment| %>
-      <p> 
-        <div> <%= render('shared_post', post: attachment.attachable) if attachment.attachable_type ==  'Post' %> <div>
-      </p>
-    <% end%>
+    <div class="text-content">
+      <%= shared_post.content %> 
+    </div>
+
+    <% if shared_post.shared_post %>
+      <%= render 'shared_post', shared_post: shared_post %>
+    <% else %>
+      <!-- render media attachments -->
+    <% end %>
   </div>
 
-  <div> <%= link_to post.author.username, user_path(post.author) %> </div>
-  <div> <small> <%= post.time %> </small> </div>
+
+  <div> <%= link_to shared_post.author.username, user_path(shared_post.author.username) %> </div>
+  <div> <small> <%= shared_post.time %> </small> </div>
 </div>
+<% end %>
