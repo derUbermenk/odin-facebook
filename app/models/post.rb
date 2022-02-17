@@ -10,7 +10,8 @@ class Post < ApplicationRecord
 
   has_many :attachments, dependent: :destroy
 
-  validate :content_or_attachment
+  validate :single_attachment_shares
+  validate :one_attachment_if_sharing
   validates :content, length: { maximum: 500 }
 
   # validates :attachments, presence: true, unless: :content
@@ -18,6 +19,12 @@ class Post < ApplicationRecord
   def content_or_attachment
     error_message = 'must be present if no attachments included'
     content.blank? && attachments.blank? && errors.add(:content, error_message)
+  end
+
+  # posts are invalid when there are more than one attachments and one is a post 
+  def single_attachment_shares 
+    error_message = 'Post cannot contain more attachments when sharing other posts'
+    shared_post && attachments.many? && errors.add(:attachments, error_message)
   end
 
   def time
