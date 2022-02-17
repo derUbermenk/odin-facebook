@@ -8,7 +8,7 @@
     </div>
 
     <% if post.shared_post %>
-      <%= render 'shared_post', shared_post: post.shared_post %>
+      <%= render 'posts/shared_post', shared_post: post.shared_post %>
     <% else %>
       <!-- render media attachments -->
     <% end %>
