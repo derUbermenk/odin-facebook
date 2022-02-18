@@ -1,7 +1,7 @@
 class Post < ApplicationRecord
   belongs_to :author, class_name: 'User'
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :likes, class_name: 'PostLike', counter_cache: :likes_count
 
   # attaches refers to all Attachment records where these particular attachable was attached
