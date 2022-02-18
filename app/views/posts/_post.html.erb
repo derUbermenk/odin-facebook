@@ -3,14 +3,20 @@
   <div> <small> <%= post.time %> </small> </div>
 
   <div name='content'>
-    <p> <%= post.content %> <p>
+    <div class="text-content">
+      <%= post.content %> 
+    </div>
 
-    <% post.attachments.each do |attachment| %>
-      <p> 
-        <%= render('posts/shared_post', post: attachment.attachable) if attachment.attachable_type == 'Post' %>
-      </p>
-    <% end%>
+    <% if post.shared_post %>
+      <%= render 'posts/shared_post', shared_post: post.shared_post %>
+    <% else %>
+      <!-- render media attachments -->
+    <% end %>
   </div>
+
+  <!--
+    render interaction-interface 
+  -->
 
   <div>
     <span class='likes-count' data-id='<%= post.id %>'> <%= post.likes_count %> </span> likes
@@ -26,9 +32,10 @@
       <% end %>
     </span>
     <span> 
-      <%= link_to share_post_path(post), remote: true, method: :post do %> 
-        <button class='share-toggle'>Share</button>
-      <% end %>
+      <%= link_to 'Share to feed', share_to_feed_post_path(post), remote: true, method: :post %> 
+    </span>
+    <span>
+      <%= link_to 'Share', share_post_path(post), method: :get %>
     </span>
   </div>
   <%= render "comments/form", comment: Comment.new(post: post) %>

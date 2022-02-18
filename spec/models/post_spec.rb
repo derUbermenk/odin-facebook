@@ -68,6 +68,23 @@ RSpec.describe Post, type: :model do
 
         expect(subject).to be_valid
       end
+
+      it 'is valid when there is more than one attachment but all are not of type Post' do
+        # check this once posting photos allowed
+      end
+
+      it 'is invalid when there is an attachment of type Post and there are more than 1 attachments' do
+        another_shareable_post = User.first.posts.create(content: 'share this too')
+        subject.attachments.create(attachable: @shareable_post)
+        subject.attachments.create(attachable: another_shareable_post)
+
+        expect(subject).to_not be_valid
+      end
+
+      it 'is valid when there is only one attachment and it is of type post' do
+        subject.attachments.create(attachable: @shareable_post)
+        expect(subject).to be_valid
+      end
     end
 
   end
@@ -99,6 +116,25 @@ RSpec.describe Post, type: :model do
           @user.share(@post)
           @post.reload
         }.to change { @post.shares_count }.by(1)
+      end
+    end
+
+    describe '#shared_post' do
+      before do
+        @user = create :user
+        @post = create :post, author: @user
+        @shareable_post = create :post, author: @user
+      end
+
+      it 'returns nil if there are no shared posts in the collection of attachments'
+
+      it 'return nil if there are no attachments' do
+        expect(@post.shared_post).to be_nil
+      end
+
+      it 'returns the post if the single attachment is a post' do
+        @post.attachments.create(attachable: @shareable_post)
+        expect(@post.shared_post).to eq(@shareable_post)
       end
     end
   end

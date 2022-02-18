@@ -139,16 +139,10 @@ RSpec.describe User, type: :model do
 
     describe '#send_request' do
       it 'sends a friends request to the specified recipient' do
-<<<<<<< Updated upstream
         @user0.send_request(@users[1])
 
         expect(@user0.sent_friend_requests.to_a.size).to eq 2
         expect(@user0.sent_friend_requests.first.recipient).to eq @users[1]
-=======
-        request = @user0.send_request(@users[1])
-
-        expect(@user0.sent_requests.first[:recipient]).to eq(@users[1])
->>>>>>> Stashed changes
       end
     end
 
@@ -157,7 +151,6 @@ RSpec.describe User, type: :model do
         @user0.accept_request(@users[4])
         expect(@user0.friends.to_a).to include(@users[4])
       end
-<<<<<<< Updated upstream
     end
 
     describe '#reject_request' do
@@ -213,8 +206,6 @@ RSpec.describe User, type: :model do
         @new_post = @user.posts.last
         expect(@new_post.attachments.first.attachable).to eq(@post)
       end
-=======
->>>>>>> Stashed changes
     end
   end
 end

@@ -12,14 +12,20 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :user_id %>
-    <%= form.text_field :user_id %>
+    <%= form.text_area :content, placeholder: 'Post Something' %>
   </div>
 
-  <div class="field">
-    <%= form.label :content %>
-    <%= form.text_area :content %>
-  </div>
+
+  <% if post.shared_post %>
+    <%= render 'shared_post', shared_post: post.shared_post %> 
+
+    <%= form.fields_for :attachments do |attachments_form| %>
+      <%= attachments_form.hidden_field :attachable_id, value: post.shared_post.id %>
+      <%= attachments_form.hidden_field :attachable_type, value: 'Post' %>
+    <% end %>
+  <% else %>
+    <!-- render attachments -->
+  <% end %>
 
   <div class="actions">
     <%= form.submit %>

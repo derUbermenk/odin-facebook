@@ -5,11 +5,13 @@ class Post < ApplicationRecord
   has_many :likes, class_name: 'PostLike', counter_cache: :likes_count
 
   # attaches refers to all Attachment records where these particular attachable was attached
-  has_many :shares, as: :attachable
+  has_many :shares, as: :attachable, class_name: 'Attachment'
   alias_attribute :shares_count, :attaches_count
 
   has_many :attachments, dependent: :destroy
+  accepts_nested_attributes_for :attachments
 
+  validate :single_attachment_shares
   validate :content_or_attachment
   validates :content, length: { maximum: 500 }
 
@@ -18,6 +20,17 @@ class Post < ApplicationRecord
   def content_or_attachment
     error_message = 'must be present if no attachments included'
     content.blank? && attachments.blank? && errors.add(:content, error_message)
+  end
+
+  # posts are invalid when there are more than one attachments and one is a post 
+  def single_attachment_shares 
+    error_message = 'Post cannot contain more attachments when sharing other posts'
+    shared_post && attachments.many? && errors.add(:attachments, error_message)
+  end
+
+  def shared_post
+    # &.method allows us to anticipate instances where the return of the
+    attachments.first&.attachable
   end
 
   def time

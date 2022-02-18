@@ -1,10 +1,11 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: %i[ show edit update destroy toggle_like share ]
+  before_action :set_post, only: %i[show edit update destroy toggle_like share]
   before_action :authenticate_user!
 
   # GET /posts or /posts.json
   def index
     # return only posts of all friends
+    @post = Post.new
     @posts = Post.feed current_user
   end
 
@@ -15,6 +16,12 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+
+    # if new action was receiving a share/:id route
+    if params[:id]
+      @attachable_post = Post.where(id: params[:id]).take
+      @attachable_post ? @post.attachments.build(attachable: @attachable_post) : nil
+    end
   end
 
   # GET /posts/1/edit
@@ -23,7 +30,8 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = Post.new(post_params)
+    binding.pry
+    @post = current_user.posts.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -80,18 +88,18 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html {}
-      format.js {}
+      format.js {render inline: "location.reload();"}
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def post_params
-      params.require(:post).permit(:user_id, :content)
-    end
+  # Only allow a list of trusted parameters through.
+  def post_params
+    params.require(:post).permit(:content, attachments_attributes: [:attachable_id, :attachable_type])
+  end
 end

@@ -1,11 +1,14 @@
 Rails.application.routes.draw do
   devise_for :users
+
   resources :posts do
     member do
       post 'toggle_like', to: 'posts#toggle_like'
-      post 'share', to: 'posts#share'
+      post 'share_to_feed', to: 'posts#share'
+      get 'share', to: 'posts#new'
     end
   end
+
   resources :comments
 
   get 'profile', to: 'users#show'
