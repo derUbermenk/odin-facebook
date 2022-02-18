@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       post 'toggle_like', to: 'posts#toggle_like'
       post 'share_to_feed', to: 'posts#share'
       get 'share', to: 'posts#new'
+      delete 'delete', to: 'posts#destroy'
     end
   end
 
