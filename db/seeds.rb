@@ -14,7 +14,7 @@ default_user = User.create(
   password: 'default@email.com'
 )
 
-70.times do
+57.times do
   user_name = Faker::Name.unique.name
   User.create(
     username: user_name,
@@ -24,7 +24,7 @@ default_user = User.create(
 end
 
 # setup friends
-User.no_connections(default_user).each_with_index do |friend, i|
+User.no_connections(default_user).limit(23).each_with_index do |friend, i|
   if i.even?
     UserConnection.create(
       initiator: friend,
@@ -62,7 +62,7 @@ end
 
 
 # setup requests
-User.no_connections(default_user).each_with_index do |suggestion, i|
+User.no_connections(default_user).limit(11).each_with_index do |suggestion, i|
   if i.even?
     UserConnection.create(
       initiator: suggestion,
@@ -78,7 +78,7 @@ User.no_connections(default_user).each_with_index do |suggestion, i|
   end
 end
 
-# make all users create a posts between 1 to 8 
+# make all users create a posts between 1 to 3 
 # add variability to the post date
 quote_sources = [
     -> { Faker::Movies::Hobbit.quote },
@@ -105,14 +105,14 @@ User.all.each do |user|
 end
 
 # setup likes, comments and shares
-percent_75_posts = (Post.count * 0.35).ceil
-Post.all.each do |post|
+Post.order("RANDOM()").limit((Post.count * 0.57).ceil).each do |post|
   author = post.author
 
-  act_on_post = [true, false]
+  # set randomness of acting on post
+  act_on_post = -> (chance) { chance > rand(1..100) }
   author.friends.limit(10).each do |friend|
-    friend.like(post) if act_on_post.sample
-    friend.share(post) if (act_on_post.sample && (friend.posts.count < 8)) 
-    friend.comments.create(post: post, content: quote_sources.sample.call) if act_on_post.sample
+    friend.like(post) if act_on_post.call(55)
+    friend.share(post) if (act_on_post.call(1) && author.posts.count < 5)
+    friend.comments.create(post: post, content: quote_sources.sample.call) if act_on_post.call(25)
   end
 end
