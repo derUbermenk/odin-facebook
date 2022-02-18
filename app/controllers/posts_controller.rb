@@ -30,7 +30,6 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    binding.pry
     @post = current_user.posts.new(post_params)
 
     respond_to do |format|
@@ -63,6 +62,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to posts_url, notice: "Post was successfully destroyed." }
+      format.js { render inline: "location.reload();", notice: "Post was successfully destroyed" }
       format.json { head :no_content }
     end
   end
