@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   before_action :set_post, only: %i[show edit update destroy toggle_like share]
-  before_action :set_attachable_post, only: :new
   before_action :authenticate_user!
 
   # GET /posts or /posts.json
@@ -17,7 +16,12 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
-    @attachable_post ? @post.attachments.build(attachable: @attachable_post) : nil
+
+    # if new action was receiving a share/:id route
+    if params[:id]
+      @attachable_post = Post.where(id: params[:id]).take
+      @attachable_post ? @post.attachments.build(attachable: @attachable_post) : nil
+    end
   end
 
   # GET /posts/1/edit
@@ -26,8 +30,8 @@ class PostsController < ApplicationController
 
   # POST /posts or /posts.json
   def create
-    @post = current_user.posts.new(post_params)
     binding.pry
+    @post = current_user.posts.new(post_params)
 
     respond_to do |format|
       if @post.save
@@ -84,7 +88,7 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       format.html {}
-      format.js {}
+      format.js {render inline: "location.reload();"}
     end
   end
 
@@ -94,12 +98,8 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
   end
 
-  def set_attachable_post
-    @attachable_post = Post.where(id: params[:attachable_post]).take
-  end
-
   # Only allow a list of trusted parameters through.
   def post_params
-    params.require(:post).permit(:content, attachments_attributes: [:post_id, :attachable_id, :attachable_type])
+    params.require(:post).permit(:content, attachments_attributes: [:attachable_id, :attachable_type])
   end
 end
