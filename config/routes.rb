@@ -4,12 +4,8 @@ Rails.application.routes.draw do
   resources :posts do
     member do
       post 'toggle_like', to: 'posts#toggle_like'
-    end
-
-    collection do
-      # share_feed bypasses form for new posts 
-      post 'share_feed/:attachable_post', to: 'posts#create', as: :share_feed
-      get 'share/:attachable_post', to: 'posts#new', as: :share
+      post 'share_to_feed', to: 'posts#share'
+      get 'share', to: 'posts#new'
     end
   end
 
