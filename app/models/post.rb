@@ -76,7 +76,7 @@ class Post < ApplicationRecord
   # builds a deleted post
   def self.deleted_post
     Post.new(
-      content: 'This post has been deleted'
+      content: 'This Post is no longer available'
     )
   end
 end

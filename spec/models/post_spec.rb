@@ -145,8 +145,8 @@ RSpec.describe Post, type: :model do
           # delete the shared post
           @shareable_post.destroy
           @post.reload
-          
-          expect(@post.shared_post.content).to eq("This post has been deleted")
+
+          expect(@post.shared_post.content).to eq("This Post is no longer available")
           expect(@post.shared_post.id).to eq(nil)
         end
       end
