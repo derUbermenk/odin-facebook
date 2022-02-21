@@ -2,7 +2,7 @@ var postId = '<%= @post.id %>'
 
 function toggleLike(postId, innerHTML) {
   let like_button = document.querySelector(
-    `.like-toggle[data-id='${postId}']`
+    `.like-toggle-button[data-id='${postId}']`
   )
 
   let likes_count = document.querySelector(
