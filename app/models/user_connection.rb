@@ -4,7 +4,8 @@ class UserConnection < ApplicationRecord
   belongs_to :recipient, class_name: 'User'
 
   validates :status, :initiator, :recipient, presence: true
-  validate :no_connections_yet, :no_connections_with_self
+  validate :no_connections_yet, on: :create
+  validate :no_connections_with_self
 
   def no_connections_yet
     error_message = 'Connection between two users already exists'
