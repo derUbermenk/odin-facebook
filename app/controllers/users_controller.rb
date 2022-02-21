@@ -10,11 +10,11 @@ class UsersController < ApplicationController
   def show
     @user_friends_count = @user.friends.count
     @mutual_friends_count = @user.mutual_friends(current_user).count
-    @posts = Post.where(author: @user)
+    @posts = Post.where(author: @user).order(updated_at: :desc).limit(20)
     @connection = UserConnection.find_with_users(@user, current_user)
   end
 
-  private 
+  private
 
   # set current user as @user if no params[:id] is nil
   # this occurs in the case that the route if from "/profile"
