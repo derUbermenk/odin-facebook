@@ -1,20 +1,32 @@
-<%= link_to post_path(shared_post), class: 'shared-post-link' do %>
 <div class="shared-post">
-    
-  <div name='content'>
-    <div class="text-content">
-      <%= shared_post.content %> 
-    </div>
+  <% if shared_post.id %>
+    <%= link_to post_path(shared_post), class: 'shared-post-link' do %>
+          
+      <div name='content'>
+        <div class="text-content">
+          <%= shared_post.content %> 
+        </div>
 
-    <% if shared_post.shared_post %>
-      <%= render 'posts/shared_post', shared_post: shared_post.shared_post %>
-    <% else %>
-      <!-- render media attachments -->
+        <% if shared_post.shared_post %>
+          <%= render 'posts/shared_post', shared_post: shared_post.shared_post %>
+        <% else %>
+          <!-- render media attachments -->
+        <% end %>
+      </div>
+
+      
+      <div class="shared-post-details">
+        <div> <%= link_to shared_post.author.username, user_path(shared_post.author.username) %> </div>
+        <div> <small> <%= shared_post.time %> </small> </div>
+      </div>
+
     <% end %>
-  </div>
 
+  <% else %>
 
-  <div> <%= link_to shared_post.author.username, user_path(shared_post.author.username) %> </div>
-  <div> <small> <%= shared_post.time %> </small> </div>
+    <div class="content">
+      <i> <%= shared_post.content %> </i>
+    </div>   
+
+  <% end %>
 </div>
-<% end %>

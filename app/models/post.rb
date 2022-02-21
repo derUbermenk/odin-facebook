@@ -28,9 +28,23 @@ class Post < ApplicationRecord
     shared_post && attachments.many? && errors.add(:attachments, error_message)
   end
 
+  # may return Post or nil 
+  # 3 cases
+  #   when no attached post retrun nil
+  #   when attached post has been deleted return #deleted_post, see class method
+  #   when has attached post return attached post
   def shared_post
     # &.method allows us to anticipate instances where the return of the
-    attachments.first&.attachable
+    attachment = attachments.first
+
+    # check if the attachable_type is of type post
+    if attachment&.attachable_type == 'Post'
+      # if attachable is not nil return it, else it must have been deleted
+      attachment&.attachable || Post.deleted_post
+    else
+      # otherwise return nil, this is in the case that there were no shared posts
+      nil
+    end
   end
 
   def time
@@ -57,5 +71,12 @@ class Post < ApplicationRecord
     user_and_friends = user.friends.pluck(:id) << user.id
 
     Post.where(author_id: user_and_friends).order('created_at DESC').limit(50)
+  end
+
+  # builds a deleted post
+  def self.deleted_post
+    Post.new(
+      content: 'This Post is no longer available'
+    )
   end
 end

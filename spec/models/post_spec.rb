@@ -136,6 +136,20 @@ RSpec.describe Post, type: :model do
         @post.attachments.create(attachable: @shareable_post)
         expect(@post.shared_post).to eq(@shareable_post)
       end
+
+      context 'when the shared post has been deleted' do
+        it 'returns it returns a post with content this post has been deleted' do
+          # make user share the post
+          @post.attachments.create(attachable: @shareable_post)
+
+          # delete the shared post
+          @shareable_post.destroy
+          @post.reload
+
+          expect(@post.shared_post.content).to eq("This Post is no longer available")
+          expect(@post.shared_post.id).to eq(nil)
+        end
+      end
     end
   end
 
