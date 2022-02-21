@@ -24,35 +24,33 @@
     render interaction-interface 
   -->
 
-  <div>
+
+  <div class="post-stats">
     <span class='likes-count' data-id='<%= post.id %>'> <%= post.likes_count %> </span> likes
     <span> <%= post.comments.count %> comments </span> 
     <span> <%= post.shares_count %> shares </span> 
-  <div>
-  <div>
-    <span> 
-      <%= link_to toggle_like_post_path(post), remote: true, method: :post do %>
-        <button class='like-toggle' data-id ='<%= post.id %>' > 
-          <%= current_user.liked?(post) ? 'Unlike' : 'Like' %>
-        </button> 
-      <% end %>
-    </span>
-    <span> 
-      <%= link_to share_to_feed_post_path(post), remote: true, method: :post do %> 
-        <button class="share-to-feed">
-          Share to feed
-        </button>
-      <% end %>
-    </span>
-    <span>
-      <%= link_to share_post_path(post), method: :get do %>
-        <button class="share">
-          Share 
-        </button>
-      <% end %>
-    </span>
   </div>
-  <%= render "comments/form", comment: Comment.new(post: post) %>
-  <%= render partial: "comments/comment", collection: post.comments %>
-  <br>
-</div>
+
+  <div class="post-interaction">
+
+    <%= link_to toggle_like_post_path(post), remote: true, method: :post do %>
+      <button class='like-toggle-button' data-id ='<%= post.id %>' > 
+        <%= current_user.liked?(post) ? 'Unlike' : 'Like' %>
+      </button> 
+    <% end %>
+
+    <%= link_to share_to_feed_post_path(post), remote: true, method: :post do %> 
+      <button class="share-to-feed-button">
+        Share to feed
+      </button>
+    <% end %>
+
+    <%= link_to share_post_path(post), method: :get do %>
+      <button class="share-button">
+        Share 
+      </button>
+    <% end %>
+
+    <%= render "comments/form", comment: Comment.new(post: post) %>
+    <%= render partial: "comments/comment", collection: post.comments %>
+  </div>
