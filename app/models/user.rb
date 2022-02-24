@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
@@ -14,17 +15,18 @@ class User < ApplicationRecord
            foreign_key: 'initiator_id', class_name: 'UserConnection'
   has_many :received_friend_requests, UsersHelper::FriendRequest.requests(:initiator),
            foreign_key: 'recipient_id', class_name: 'UserConnection'
+  has_many :user_connections
 
   validates :username, :email, presence: true
 
-  # returns all users that have no connections with user
-  def self.no_connections(user)
-    excluded_ids = user.friends.pluck(:id) | user.sent_friend_requests.pluck(:recipient_id) | user.received_friend_requests.pluck(:initiator_id)
-    User.where.not(id: excluded_ids).order('RANDOM()').limit(20)
+  # returns User relations of mutual friends
+  def friend
+    @friend ||= Friends.new(self)
   end
 
-  include UsersHelper::FriendRequest
-  include UsersHelper::Friends
-  include UsersHelper::PostLiking
-  include UsersHelper::PostSharing
+  # returns User relations of mutual friends
+  def mutual(other_user)
+    @mutual ||= Mutuals.new(self, other_user)
+  end
 end
+
