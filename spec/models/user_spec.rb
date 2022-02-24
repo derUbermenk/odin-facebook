@@ -57,6 +57,8 @@ RSpec.describe User, type: :model do
     # it { should have_many(:sent_messages) }
     # it { should have_many(:received_messages) }
 
+    it { should have_many(:friend_requests)}
+    it { should have_many(:friends) }
     it { should have_many(:sent_friend_requests) }
     it { should have_many(:received_friend_requests) }
     # it { should have_many(:initiated_friendships) }
@@ -84,7 +86,6 @@ RSpec.describe User, type: :model do
         expect(received_friend_requests).to eq(@received_requests)
       end
     end
-
   end
 
   describe 'Friends Methods' do
