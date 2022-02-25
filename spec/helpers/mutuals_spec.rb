@@ -6,7 +6,7 @@ RSpec.describe Mutuals do
   let(:opposite_user) { create :user, email: 'other_user@email.com' }
 
   subject { 
-    described_class.new(current_user, opposite_user) 
+    described_class.new(current_user.friends, opposite_user.friends)
   }
 
   before do
