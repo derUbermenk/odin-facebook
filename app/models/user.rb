@@ -42,6 +42,8 @@ class User < ApplicationRecord
 
   has_many :friends, UsersFriendScopes.friends, class_name: 'User'
 
+  scope :and_friends, ->(user) { where(id: user.id).or(where(id: user.friends)) }
+
   # validations
   validates :username, :email, presence: true
 
