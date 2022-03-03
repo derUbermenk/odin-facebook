@@ -51,4 +51,8 @@ class User < ApplicationRecord
   def mutual(other_user)
     @mutual ||= Mutuals.new(self.friends, other_user.friends)
   end
+
+  def liked?(post)
+    liked_posts.include?(post)
+  end
 end
