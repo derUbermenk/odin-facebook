@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user
+  before_action :set_user, except: [:index]
   before_action :authenticate_user!
 
   def index
@@ -8,10 +8,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user_friends_count = @user.friends.count
-    @mutual_friends_count = @user.mutual_friends(current_user).count
-    @posts = Post.where(author: @user).order(updated_at: :desc).limit(20)
-    @connection = UserConnection.find_with_users(@user, current_user)
   end
 
   private
@@ -20,5 +16,10 @@ class UsersController < ApplicationController
   # this occurs in the case that the route if from "/profile"
   def set_user
     @user = params[:id] ? User.find(params[:id]) : current_user
+
+    # setup related
+    unless @user = current_user
+      @connection = UserConnection.search(current_user, @user)
+    end
   end
 end
