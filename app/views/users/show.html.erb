@@ -7,11 +7,17 @@
   <% if @user == current_user %>
 
     <div class="user-info">
-      <strong><%= @user.username %> </strong><br>
-      <small> <%= pluralize(@user_friends_count, 'friend') %> </small>
+      <div class="user-img">
+        <%= gravatar_for(@user) %>
+      </div>
+      <div class="user-text-info">
+        <span id='username'><%= @user.username %> </span><br>
+        <span id='email'><%= @user.email%> </span><br>     
+        <small> <%= pluralize(@user_friends_count, 'friend') %> </small>
+      </div>
     </div>
     <div class="edit">
-      <small> <%= link_to "Edit Profile", edit_user_path(@user) %> </small>
+      <small> <%= link_to "Edit Profile", edit_user_path(@user), id: 'profile-edit' %> </small>
     </div>
 
   <% else%>

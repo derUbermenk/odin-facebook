@@ -1,0 +1,17 @@
+<nav id="navbar">
+  <div class="brand">
+    <%= link_to root_path, id: "brand-name" do %>
+      <h1>FakeBook</h1>
+    <% end%>
+  </div>
+
+  <div class="menu">
+      <% if user_signed_in? %>
+        <span> <%= link_to current_user.username, profile_path, class: 'nav-link' %> </span> /
+      <% end %>
+      <span> <%= link_to 'Messages', '#', class: 'nav-link' %> </span> /
+      <span> <%= link_to 'Friends', users_path, class: 'nav-link' %> </span> /
+      <span> <%= link_to 'Notifications', '#', class: 'nav-link' %> </a></span> /
+      <span> <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link' %> </a></span>
+  </div>
+</nav>

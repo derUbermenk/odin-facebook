@@ -11,22 +11,7 @@
   </head>
 
   <body>
-    <nav>
-      <div class="brand">
-        <%= link_to root_path do %>
-          <h1>FakeBook</h1>
-        <% end%>
-      </div>
-
-      <div class="menu">
-          <% if user_signed_in? %>
-            <div> <%= link_to current_user.username, profile_path %> </div>
-          <% end %>
-          <div> <%= link_to 'Messages' %> </div>
-          <div> <%= link_to 'Friends', users_path %> </div>
-          <div> <%= link_to 'Notifications' %> </a></div>
-      </div>
-    </nav>
+    <%= render 'navbar' %>
     <%= yield %>
   </body>
 </html>

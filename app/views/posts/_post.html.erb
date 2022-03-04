@@ -1,23 +1,34 @@
-<div>
-  <div> <strong> <%= link_to post.author.username, user_path(post.author.id) %> </strong> </div>
-  <% if post.author == current_user %>
-    <div class="post-controls">
-      <span> <small> <%= link_to 'Edit', edit_post_path(post) %> </small> </span>
-      <span> <small> <%= link_to 'Delete', delete_post_path(post), remote: true, method: :delete %> </small> </span>
-    </div>
-  <% end %>
-  <div> <small> <%= post.time %> </small> </div>
+<div class="post-card">
+  <div class="post-contents">
 
-  <div name='content'>
-    <div class="text-content">
-      <%= post.content %> 
+    <div class="author-info">
+      <div class="author-img">
+        <%= gravatar_for(post.author, size: 50)%>
+      </div>
+
+      <div class="text-info">
+
+        <div class="row1">
+          <div> <strong> <%= link_to post.author.username, user_path(post.author.id) %> </strong> </div>
+
+        </div>
+
+        <div> <small> <%= post.time_passed %> </small> </div>
+      </div>
     </div>
 
-    <% if post.shared_post %>
-      <%= render 'posts/shared_post', shared_post: post.shared_post %>
-    <% else %>
-      <!-- render media attachments -->
-    <% end %>
+    <div name='content'>
+      <div class="text-content">
+        <%= post.content %> 
+      </div>
+
+      <% if post.shared_post %>
+        <%= render 'posts/shared_post', shared_post: post.shared_post %>
+      <% else %>
+        <!-- render media attachments -->
+      <% end %>
+    </div>
+
   </div>
 
   <!--
@@ -26,31 +37,48 @@
 
 
   <div class="post-stats">
+
     <span class='likes-count' data-id='<%= post.id %>'> <%= post.likes_count %> </span> likes
     <span> <%= post.comments.count %> comments </span> 
     <span> <%= post.shares_count %> shares </span> 
+
   </div>
 
   <div class="post-interaction">
 
-    <%= link_to toggle_like_post_path(post), remote: true, method: :post do %>
-      <button class='like-toggle-button' data-id ='<%= post.id %>' > 
-        <%= current_user.liked?(post) ? 'Unlike' : 'Like' %>
-      </button> 
-    <% end %>
+    <div class="post-interaction-buttons">
+      <% if post.author == current_user %>
+        <div class="post-controls">
+          <span> <small> <%= link_to 'Edit', edit_post_path(post) %> </small> </span>
+          <span> <small> <%= link_to 'Delete', delete_post_path(post), remote: true, method: :delete %> </small> </span>
+        </div>
+      <% end %>
+      <br>
 
-    <%= link_to share_to_feed_post_path(post), remote: true, method: :post do %> 
-      <button class="share-to-feed-button">
-        Share to feed
-      </button>
-    <% end %>
+      <%= link_to toggle_like_post_path(post), remote: true, method: :post do %>
+        <button class='like-toggle-button' data-id ='<%= post.id %>' > 
+          <%= current_user.liked?(post) ? 'Unlike' : 'Like' %>
+        </button> 
+      <% end %>
 
-    <%= link_to share_post_path(post), method: :get do %>
-      <button class="share-button">
-        Share 
-      </button>
-    <% end %>
+      <%= link_to share_to_feed_post_path(post), remote: true, method: :post do %> 
+        <button class="share-to-feed-button">
+          Share to feed
+        </button>
+      <% end %>
 
-    <%= render "comments/form", comment: Comment.new(post: post) %>
-    <%= render partial: "comments/comment", collection: post.comments %>
+      <%= link_to share_post_path(post), method: :get do %>
+        <button class="share-button">
+          Share 
+        </button>
+      <% end %>
+
+
+    </div>
+
+    <div class="post-comments">
+      <%= render "comments/form", comment: Comment.new(post: post) %>
+      <%= render partial: "comments/comment", collection: post.comments %>   
+    </div>
   </div>
+</div>
