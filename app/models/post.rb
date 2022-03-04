@@ -14,6 +14,8 @@ class Post < ApplicationRecord
 
   validate :content_and_attachment
 
+  paginates_per 5 
+
   def content_and_attachment
     validator = PostCustomValidator.new self
     validator.validate

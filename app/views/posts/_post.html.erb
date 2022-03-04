@@ -47,6 +47,7 @@
   <div class="post-interaction">
 
     <div class="post-interaction-buttons">
+
       <% if post.author == current_user %>
         <div class="post-controls">
           <span> <small> <%= link_to 'Edit', edit_post_path(post) %> </small> </span>

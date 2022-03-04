@@ -4,4 +4,5 @@
 <div class="posts">
   <%= render 'form', post: @post %>
   <%= render partial: 'post', collection: @posts %>
+  <%= paginate @posts %>
 </div>
