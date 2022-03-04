@@ -35,6 +35,7 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 5.0.0'
+  gem 'rails-controller-testing'
   gem 'shoulda-matchers'
   gem "factory_bot_rails"
   gem "debug", ">= 1.0.0"
@@ -53,6 +54,10 @@ group :development do
   # Automatically run tests with guard
   gem 'guard'
   gem 'guard-rspec', require: false
+  gem 'guard-livereload', '~> 2.5', require: false
+  gem "rack-livereload"
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 group :test do
