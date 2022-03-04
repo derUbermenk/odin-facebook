@@ -1,4 +1,4 @@
-<div class="shared-post">
+<div class="shared-post post-card">
   <% if shared_post.id %>
     <%= link_to post_path(shared_post), class: 'shared-post-link' do %>
           
@@ -16,8 +16,13 @@
 
       
       <div class="shared-post-details">
-        <div> <%= link_to shared_post.author.username, user_path(shared_post.author.username) %> </div>
-        <div> <small> <%= shared_post.time %> </small> </div>
+        <div class="post-author-image">
+          <div> <%= gravatar_for(shared_post.author, size: 30) %> </div>
+        </div>
+        <div class="shared-post-info">
+          <div> <%= link_to shared_post.author.username, user_path(shared_post.author.username) %> </div>
+          <div> <small> <%= shared_post.time %> </small> </div>
+        </div>
       </div>
 
     <% end %>

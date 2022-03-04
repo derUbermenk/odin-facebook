@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   def index
     # return only posts of all friends
     @post = Post.new
-    @posts = Post.feed current_user
+    @posts = Post.feed_for(current_user).page(params[:page])
   end
 
   # GET /posts/1 or /posts/1.json

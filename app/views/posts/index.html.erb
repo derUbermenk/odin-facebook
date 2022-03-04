@@ -1,4 +1,8 @@
 <p id="notice"><%= notice %></p>
 
-<%= render 'form', post: @post %>
-<%= render partial: "post", collection: @posts %>
+
+<div class="posts">
+  <%= render 'form', post: @post %>
+  <%= render partial: 'post', collection: @posts %>
+  <%= paginate @posts %>
+</div>

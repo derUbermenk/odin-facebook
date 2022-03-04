@@ -11,12 +11,12 @@ RSpec.describe UserConnection, type: :model do
 
     it { should validate_presence_of(:status) }
 
-    it 'should be invalid when there is already a connection involving the two given users' do
+    it 'expected to be invalid when there is already a connection involving the two given users' do
       new_connection = build(:user_connection, :pending, initiator: @u2, recipient: @u1)
       expect(new_connection).to_not be_valid
     end
 
-    it 'should not be able to establish a connection with self' do
+    it 'expected to not be able to establish a connection with the same user' do
       new_connection = build(:user_connection, :pending, initiator: @u1, recipient: @u1)
       expect(new_connection).to_not be_valid
     end
