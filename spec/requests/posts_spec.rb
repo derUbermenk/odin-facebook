@@ -24,6 +24,10 @@ RSpec.describe "/posts", type: :request do
     skip("Add a hash of attributes invalid for your model")
   }
 
+  context 'when logged in' do 
+    describe ''
+  end
+
   describe "GET /index" do
     it "renders a successful response" do
       Post.create! valid_attributes

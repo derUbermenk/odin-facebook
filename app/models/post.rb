@@ -24,7 +24,7 @@ class Post < ApplicationRecord
     retriever.shared_post
   end
 
-  def time_passed
+  def time
     TimePassed.format(updated_at)
   end
 end

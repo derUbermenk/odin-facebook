@@ -1,3 +1,56 @@
 // Place all the styles related to the Posts controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
+.posts{
+  padding-left: 25%;
+  padding-right: 25%
+}
+
+.post-card {
+  border-radius: 5px;
+  border: 2px solid grey;
+  padding: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.shared-post-link {
+  text-decoration: none;
+
+  &:hover {
+    color: gray;
+  }
+}
+
+.post-interaction{
+  padding-top: 10px;
+
+  .post-interaction-buttons{
+    padding-bottom: 10px;
+  }
+}
+
+.post-contents{
+  .author-info{
+    display: flex;
+    align-items: center;
+    
+    .text-info{
+      display: flex;
+      flex-direction: column;
+      .row1{
+        display: flex;
+      }
+    }
+  }
+}
+
+.shared-post-details{
+  display: flex;
+  align-items: center;
+}
+
+.commenter-info{
+  display: flex;
+  align-items: center;
+}

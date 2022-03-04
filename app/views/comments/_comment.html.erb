@@ -1,6 +1,9 @@
-<div>
+<div class="comment">
   <small>
-  <div> <strong> <%= link_to comment.user.username, comment.user %> </strong> </div>
+  <div class="commenter-info">
+    <div class="commenter-img"><%= gravatar_for(comment.user, size: 30) %></div>
+    <div> <strong> <%= link_to comment.user.username, comment.user %> </strong> </div>
+  </div>
   <div> <%= comment.content %> </div>
   <div> <small> <%= comment.time %> </small> </div>
   </small>
